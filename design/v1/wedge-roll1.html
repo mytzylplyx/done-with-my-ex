@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DoneWithMyEx — v1 Wedge Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Work+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#051036; --navy0:#010A31; --navy1:#0E193E; --navy2:#131D43; --navy3:#293359;
+  --text:#DDE1FF; --muted:rgba(221,225,255,.58); --faint:rgba(221,225,255,.36);
+  --teal:#97F7F6; --teald:#008080;
+  --gold1:#FFE4AF; --gold2:#FFC107;
+  --gold:linear-gradient(135deg,#FFE4AF 0%,#FFC107 100%);
+  --r:6px; --hair:rgba(221,225,255,.10);
+  --display:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+  --body:'Inter','Segoe UI',system-ui,sans-serif;
+  --label:'Work Sans','Segoe UI',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#02061c;font-family:var(--body);color:var(--text);-webkit-font-smoothing:antialiased}
+.frame{width:1280px;margin:0 auto;background:var(--navy);position:relative;overflow:hidden}
+.cap{width:1280px;margin:34px auto 10px;font-family:var(--label);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.cap b{color:var(--gold2)}
+/* type */
+.display{font-family:var(--display);font-weight:700;letter-spacing:-.01em;line-height:1.02}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+.lab{font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.gold-text{background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.muted{color:var(--muted)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--label);font-weight:700;font-size:14px;letter-spacing:.02em;padding:13px 22px;border-radius:var(--r);cursor:pointer;border:0}
+.btn-gold{background:var(--gold);color:#1a1300}
+.btn-ghost{background:var(--navy3);color:var(--gold2)}
+.btn-sm{padding:9px 14px;font-size:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.04em;padding:5px 10px;border-radius:4px;background:var(--navy2);color:var(--muted)}
+.pill.lock{color:var(--gold2);background:rgba(255,193,7,.10)}
+.pill.teal{color:var(--teal);background:rgba(151,247,246,.08)}
+/* logo mark */
+.logo{display:flex;align-items:center;gap:11px}
+.logo .nm{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.01em}
+.logo .nm .ex{color:var(--gold2)}
+svg.mark{width:34px;height:34px;display:block}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,193,7,.20),rgba(255,193,7,0) 62%);pointer-events:none}
+.card{background:var(--navy1);border-radius:var(--r)}
+.divider{height:1px;background:var(--hair)}
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px}
+.nav .links{display:flex;gap:28px;align-items:center;font-family:var(--label);font-weight:600;font-size:13px;color:var(--muted)}
+/* countdown numerals */
+.clock{display:flex;gap:14px}
+.unit{min-width:104px;text-align:center;background:var(--navy2);border-radius:var(--r);padding:18px 10px 12px}
+.unit .n{font-family:var(--display);font-weight:700;font-size:54px;line-height:1}
+.unit .u{margin-top:8px}
+.sep{font-family:var(--display);font-weight:700;font-size:44px;color:var(--faint);align-self:center}
+/* progress */
+.bar{height:8px;background:var(--navy2);border-radius:20px;overflow:hidden}
+.bar>i{display:block;height:100%;width:31.5%;background:var(--gold);border-radius:20px}
+/* footer */
+.foot{padding:22px 48px;border-top:1px solid var(--hair);font-size:11px;color:var(--faint);display:flex;justify-content:space-between;align-items:center}
+/* app chrome */
+.app{display:flex;min-height:760px}
+.side{width:230px;background:var(--navy0);padding:22px 16px;flex:none}
+.side .navi{display:flex;flex-direction:column;gap:4px;margin-top:26px}
+.side .navi a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);font-family:var(--label);font-weight:600;font-size:13px;color:var(--muted)}
+.side .navi a.on{background:var(--navy2);color:var(--text)}
+.side .navi a .dot{width:7px;height:7px;border-radius:2px;background:var(--gold2)}
+.main{flex:1;padding:30px 36px}
+.toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.stat{flex:1;background:var(--navy1);border-radius:var(--r);padding:18px 20px}
+.stat .k{font-family:var(--display);font-weight:700;font-size:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);text-align:left;padding:12px 14px}
+td{padding:14px;border-top:1px solid var(--hair);color:var(--text)}
+td .ty{font-size:11px;color:var(--muted)}
+.tag{font-family:var(--label);font-weight:600;font-size:11px;padding:3px 8px;border-radius:4px;background:var(--navy3);color:var(--muted)}
+.tag.al{color:var(--teal);background:rgba(151,247,246,.08)}
+.tag.cs{color:var(--gold2);background:rgba(255,193,7,.09)}
+.panel{width:320px;background:var(--navy1);border-radius:var(--r);padding:22px;flex:none}
+.field{margin-bottom:14px}
+.field .lab{display:block;margin-bottom:6px}
+.inp{width:100%;background:var(--navy0);border:1px solid var(--hair);border-radius:var(--r);padding:11px 12px;color:var(--text);font-family:var(--body);font-size:13.5px}
+.seg{display:flex;background:var(--navy0);border-radius:var(--r);padding:3px}
+.seg span{flex:1;text-align:center;padding:8px;border-radius:4px;font-family:var(--label);font-weight:600;font-size:12px;color:var(--muted)}
+.seg span.on{background:var(--navy3);color:var(--text)}
+.drop{border:1px dashed rgba(221,225,255,.18);border-radius:var(--r);padding:16px;text-align:center;font-size:12px;color:var(--faint)}
+/* pricing */
+.price{display:flex;gap:20px}
+.plan{flex:1;background:var(--navy1);border-radius:var(--r);padding:26px 24px;position:relative}
+.plan.feat{background:linear-gradient(180deg,rgba(255,193,7,.06),rgba(5,16,54,0)),var(--navy1);outline:1px solid rgba(255,193,7,.35)}
+.plan .price-n{font-family:var(--display);font-weight:700;font-size:40px;margin:6px 0}
+.plan ul{list-style:none;margin:18px 0 0;display:flex;flex-direction:column;gap:11px;font-size:13px;color:var(--muted)}
+.plan li{display:flex;gap:9px;align-items:flex-start}
+.plan li .c{color:var(--teal);font-weight:700}
+.plan li .x{color:var(--faint)}
+.ribbon{position:absolute;top:-11px;right:18px;background:var(--gold);color:#1a1300;font-family:var(--label);font-weight:700;font-size:10px;letter-spacing:.08em;padding:5px 10px;border-radius:4px;text-transform:uppercase}
+.toggle{display:inline-flex;background:var(--navy2);border-radius:20px;padding:4px}
+.toggle span{padding:7px 16px;border-radius:16px;font-family:var(--label);font-weight:600;font-size:12px;color:var(--muted)}
+.toggle span.on{background:var(--gold);color:#1a1300}
+.vault-doc{background:#fbf7ee;color:#15203f;border-radius:var(--r);padding:22px;font-family:var(--body)}
+.vault-doc .vh{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #15203f;padding-bottom:10px;margin-bottom:12px}
+.vault-doc table td,.vault-doc table th{color:#15203f;border-color:rgba(21,32,63,.12)}
+.vault-doc th{color:#5b6b8c}
+</style>
+</head>
+<body>
+
+<!-- ============ defs (crow placeholder) ============ -->
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE4AF"/><stop offset="1" stop-color="#FFC107"/></linearGradient>
+</defs></svg>
+
+<!-- ================= 1. LANDING ================= -->
+<div class="cap">01 — <b>Landing</b> · top of funnel, free lure</div>
+<section class="frame" id="screen-landing">
+  <div class="glow" style="width:720px;height:720px;right:-160px;top:-220px"></div>
+  <div class="nav">
+    <div class="logo"><svg class="mark" viewBox="0 0 120 120"><circle cx="60" cy="60" r="46" fill="none" stroke="url(#cg)" stroke-width="4"/><path d="M60 72 L33 36 L57 57 L60 40 L63 57 L87 36 L60 72 Z" fill="url(#cg)"/><circle cx="60" cy="66" r="5.5" fill="url(#cg)"/><rect x="40" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/><rect x="66" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/></svg><span class="nm">DONE WITH MY <span class="ex">EX</span></span></div>
+    <div class="links"><span>How it works</span><span>Pricing</span><span>Blog</span><span style="color:var(--text)">Log in</span><span class="btn btn-gold btn-sm">Start free</span></div>
+  </div>
+  <div style="padding:60px 48px 50px;display:flex;gap:40px;align-items:center">
+    <div style="flex:1.15">
+      <div class="eyebrow">For everyone still paying</div>
+      <h1 class="display" style="font-size:60px;margin:18px 0 0">Your freedom<br>has a <span class="gold-text">date.</span></h1>
+      <p class="muted" style="font-size:18px;line-height:1.55;margin:22px 0 30px;max-width:480px">Track every alimony &amp; child-support payment, hoard the proof, and watch the days melt away — on a countdown that actually makes you laugh.</p>
+      <div style="display:flex;gap:14px;align-items:center">
+        <span class="btn btn-gold">Start your free countdown →</span>
+        <span class="btn btn-ghost">See pricing</span>
+      </div>
+      <div style="display:flex;gap:22px;margin-top:30px" class="lab">
+        <span>● Free countdown, no login</span><span>● Records you actually keep</span>
+      </div>
+    </div>
+    <div style="flex:1;position:relative">
+      <div class="card" style="padding:26px;position:relative;z-index:1">
+        <div class="lab" style="margin-bottom:14px">Freedom clock · until your obligation ends</div>
+        <div class="clock">
+          <div class="unit"><div class="n gold-text">723</div><div class="u lab">Days</div></div>
+          <div class="unit"><div class="n gold-text">13</div><div class="u lab">Hrs</div></div>
+          <div class="unit"><div class="n gold-text">01</div><div class="u lab">Min</div></div>
+          <div class="unit"><div class="n gold-text">52</div><div class="u lab">Sec</div></div>
+        </div>
+        <div style="margin-top:18px" class="bar"><i></i></div>
+        <div style="display:flex;justify-content:space-between;margin-top:9px" class="lab"><span>8/1/2025</span><span class="gold-text">31.5% free</span><span>6/22/2028</span></div>
+        <div class="divider" style="margin:18px 0"></div>
+        <div style="display:flex;align-items:center;gap:10px"><span class="pill teal">Humor mode</span><span class="muted" style="font-size:13px">≈ <b style="color:var(--text)">103 Taco Tuesdays</b> till freedom 🌮</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:18px;padding:0 48px 46px">
+    <div class="card" style="flex:1;padding:22px"><div class="display" style="font-size:18px">Freedom Countdown</div><p class="muted" style="font-size:13.5px;margin-top:8px;line-height:1.5">Free, shareable, a little unhinged. Humor &amp; Nerd modes turn the wait into a running joke.</p></div>
+    <div class="card" style="flex:1;padding:22px"><div class="display" style="font-size:18px">Payment Logger + Proof Vault</div><p class="muted" style="font-size:13.5px;margin-top:8px;line-height:1.5">Log each payment in seconds, attach the receipt, export a clean branded statement you’ll never want to lose.</p></div>
+    <div class="card" style="flex:1;padding:22px"><div class="display" style="font-size:18px">Built by a payer 🐦‍⬛</div><p class="muted" style="font-size:13.5px;margin-top:8px;line-height:1.5">No lawyers, no neutrality theater. Made for the person writing the check — to get them to the finish line.</p></div>
+  </div>
+  <div class="foot"><span>Not legal, financial, or tax advice. Your organized records — for negotiation, disputes &amp; peace of mind.</span><span>© DoneWithMyEx</span></div>
+</section>
+
+<!-- ================= 2. COUNTDOWN ================= -->
+<div class="cap">02 — <b>Freedom Countdown</b> · the free toy + share engine</div>
+<section class="frame" id="screen-countdown">
+  <div class="glow" style="width:760px;height:760px;left:50%;transform:translateX(-50%);top:-260px"></div>
+  <div class="nav">
+    <div class="logo"><svg class="mark" viewBox="0 0 120 120"><circle cx="60" cy="60" r="46" fill="none" stroke="url(#cg)" stroke-width="4"/><path d="M60 72 L33 36 L57 57 L60 40 L63 57 L87 36 L60 72 Z" fill="url(#cg)"/><circle cx="60" cy="66" r="5.5" fill="url(#cg)"/><rect x="40" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/><rect x="66" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/></svg><span class="nm">DONE WITH MY <span class="ex">EX</span></span></div>
+    <div class="links"><span class="pill">No login to play</span><span class="btn btn-ghost btn-sm">Save this countdown</span></div>
+  </div>
+  <div style="text-align:center;padding:40px 48px 14px">
+    <div class="eyebrow">Freedom Clock</div>
+    <div class="lab" style="margin-top:10px">Until your obligation ends · 6/22/2028</div>
+    <div class="clock" style="justify-content:center;margin:26px 0 6px">
+      <div class="unit" style="min-width:150px"><div class="n gold-text" style="font-size:76px">723</div><div class="u lab">Days</div></div>
+      <div class="sep">:</div>
+      <div class="unit" style="min-width:120px"><div class="n gold-text" style="font-size:76px">13</div><div class="u lab">Hours</div></div>
+      <div class="sep">:</div>
+      <div class="unit" style="min-width:120px"><div class="n gold-text" style="font-size:76px">01</div><div class="u lab">Min</div></div>
+      <div class="sep">:</div>
+      <div class="unit" style="min-width:120px"><div class="n gold-text" style="font-size:76px">52</div><div class="u lab">Sec</div></div>
+    </div>
+    <div style="max-width:620px;margin:24px auto 0"><div class="bar"><i></i></div>
+      <div style="display:flex;justify-content:space-between;margin-top:9px" class="lab"><span>8/1/2025 · day one</span><span class="gold-text">31.5% to freedom</span><span>6/22/2028 · parole</span></div></div>
+  </div>
+  <div style="display:flex;justify-content:center;gap:8px;margin:14px 0 6px">
+    <span class="toggle"><span>Straight</span><span class="on">Humor</span><span>Nerd</span></span>
+  </div>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;max-width:880px;margin:14px auto 0">
+    <div class="card" style="padding:16px 18px;min-width:200px"><div class="display gold-text" style="font-size:24px">103.4</div><div class="lab" style="margin-top:6px">Taco Tuesdays</div><div class="muted" style="font-size:12px;margin-top:4px">a few tacos from liberty</div></div>
+    <div class="card" style="padding:16px 18px;min-width:200px"><div class="display gold-text" style="font-size:24px">5,788</div><div class="lab" style="margin-top:6px">Oppenheimers</div><div class="muted" style="font-size:12px;margin-top:4px">till detonation… of payments</div></div>
+    <div class="card" style="padding:16px 18px;min-width:200px"><div class="display gold-text" style="font-size:24px">138,920</div><div class="lab" style="margin-top:6px">Ex-Spouse Guilt Trips</div><div class="muted" style="font-size:12px;margin-top:4px">stay strong</div></div>
+    <div class="card" style="padding:16px 18px;min-width:200px"><div class="display gold-text" style="font-size:24px">9.06M</div><div class="lab" style="margin-top:6px">Tinder Left Swipes</div><div class="muted" style="font-size:12px;margin-top:4px">to a fresh start</div></div>
+  </div>
+  <div style="display:flex;gap:14px;justify-content:center;margin:30px 0 44px">
+    <span class="btn btn-gold">Share my freedom card 📸</span>
+    <span class="btn btn-ghost">Save countdown → Sign up</span>
+  </div>
+</section>
+
+<!-- ================= 3. PAYMENT LOGGER ================= -->
+<div class="cap">03 — <b>Payment Logger</b> · the paid anchor (protection, not bookkeeping)</div>
+<section class="frame" id="screen-logger">
+  <div class="app">
+    <div class="side">
+      <div class="logo"><svg class="mark" viewBox="0 0 120 120" style="width:28px;height:28px"><circle cx="60" cy="60" r="46" fill="none" stroke="url(#cg)" stroke-width="4"/><path d="M60 72 L33 36 L57 57 L60 40 L63 57 L87 36 L60 72 Z" fill="url(#cg)"/><circle cx="60" cy="66" r="5.5" fill="url(#cg)"/><rect x="40" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/><rect x="66" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/></svg><span class="nm" style="font-size:13px">DWMX</span></div>
+      <div class="navi">
+        <a><span style="opacity:.6">◷</span> Freedom Clock</a>
+        <a class="on"><span class="dot"></span> Payments</a>
+        <a><span style="opacity:.6">▤</span> Proof Vault</a>
+        <a><span style="opacity:.6">◇</span> Milestones</a>
+        <a><span style="opacity:.6">⚙</span> Settings</a>
+      </div>
+      <div class="card" style="margin-top:28px;padding:14px"><div class="lab">Plan</div><div class="display" style="font-size:15px;margin-top:6px">On Parole · Free</div><div class="pill lock" style="margin-top:10px">Export locked</div></div>
+    </div>
+    <div class="main">
+      <div class="toprow">
+        <div><div class="display" style="font-size:24px">Payments</div><div class="muted" style="font-size:13px;margin-top:4px">Every payment, with the receipt to prove it.</div></div>
+        <span class="btn btn-gold">+ Log payment</span>
+      </div>
+      <div style="display:flex;gap:14px;margin-bottom:22px">
+        <div class="stat"><div class="lab">Logged this month</div><div class="k gold-text">$1,400</div></div>
+        <div class="stat"><div class="lab">Total logged</div><div class="k">$18,200</div></div>
+        <div class="stat"><div class="lab">Receipts stored</div><div class="k">13</div></div>
+        <div class="stat"><div class="lab">On-time streak</div><div class="k gold-text">11 mo</div></div>
+      </div>
+      <div class="card" style="overflow:hidden">
+        <table>
+          <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Method</th><th>Receipt</th></tr></thead>
+          <tbody>
+            <tr><td>Jun 1, 2026<div class="ty">on time</div></td><td><span class="tag al">Alimony</span></td><td>$1,000.00</td><td>Bank transfer</td><td><span class="pill teal">✓ attached</span></td></tr>
+            <tr><td>Jun 1, 2026<div class="ty">on time</div></td><td><span class="tag cs">Child support</span></td><td>$400.00</td><td>Bank transfer</td><td><span class="pill teal">✓ attached</span></td></tr>
+            <tr><td>May 1, 2026</td><td><span class="tag al">Alimony</span></td><td>$1,000.00</td><td>Check #2841</td><td><span class="pill teal">✓ attached</span></td></tr>
+            <tr><td>May 1, 2026</td><td><span class="tag cs">Child support</span></td><td>$400.00</td><td>Venmo</td><td><span class="pill">no receipt</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="display" style="font-size:17px;margin-bottom:4px">Log a payment</div>
+      <div class="muted" style="font-size:12px;margin-bottom:18px">Takes 10 seconds. Hoard the proof.</div>
+      <div class="field"><span class="lab">Date</span><input class="inp" value="Jun 1, 2026"></div>
+      <div class="field"><span class="lab">Type</span><div class="seg"><span class="on">Alimony</span><span>Child support</span></div></div>
+      <div class="field"><span class="lab">Amount</span><input class="inp" value="$1,000.00"></div>
+      <div class="field"><span class="lab">Method</span><input class="inp" value="Bank transfer"></div>
+      <div class="field"><span class="lab">Receipt</span><div class="drop">⬆ Drop a screenshot or photo</div></div>
+      <span class="btn btn-gold" style="width:100%;justify-content:center">Save payment</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. PROOF VAULT ================= -->
+<div class="cap">04 — <b>Proof Vault</b> · what they pay to keep</div>
+<section class="frame" id="screen-vault">
+  <div class="app">
+    <div class="side">
+      <div class="logo"><svg class="mark" viewBox="0 0 120 120" style="width:28px;height:28px"><circle cx="60" cy="60" r="46" fill="none" stroke="url(#cg)" stroke-width="4"/><path d="M60 72 L33 36 L57 57 L60 40 L63 57 L87 36 L60 72 Z" fill="url(#cg)"/><circle cx="60" cy="66" r="5.5" fill="url(#cg)"/><rect x="40" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/><rect x="66" y="88" width="14" height="5" rx="1.5" fill="url(#cg)"/></svg><span class="nm" style="font-size:13px">DWMX</span></div>
+      <div class="navi">
+        <a><span style="opacity:.6">◷</span> Freedom Clock</a>
+        <a><span style="opacity:.6">▤</span> Payments</a>
+        <a class="on"><span class="dot"></span> Proof Vault</a>
+        <a><span style="opacity:.6">◇</span> Milestones</a>
+        <a><span style="opacity:.6">⚙</span> Settings</a>
+      </div>
+      <div class="card" style="margin-top:28px;padding:14px"><div class="lab">Plan</div><div class="display" style="font-size:15px;margin-top:6px">Done · Pro</div><div class="pill teal" style="margin-top:10px">Export unlocked</div></div>
+    </div>
+    <div class="main">
+      <div class="toprow">
+        <div><div class="display" style="font-size:24px">Proof Vault</div><div class="muted" style="font-size:13px;margin-top:4px">Your organized records — for negotiation, disputes &amp; peace of mind.</div></div>
+      </div>
+      <div style="display:flex;gap:22px">
+        <div style="flex:1.2">
+          <div class="vault-doc">
+            <div class="vh"><div><div style="font-weight:700;font-family:var(--display)">Payment Statement</div><div style="font-size:11px;color:#5b6b8c">Jan 1 – Jun 30, 2026</div></div><div style="font-size:11px;color:#5b6b8c;text-align:right">DoneWithMyEx<br>Generated 6/29/2026</div></div>
+            <table>
+              <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Method</th></tr></thead>
+              <tbody style="font-size:12.5px">
+                <tr><td>Jun 1</td><td>Alimony</td><td>$1,000.00</td><td>Bank transfer</td></tr>
+                <tr><td>Jun 1</td><td>Child support</td><td>$400.00</td><td>Bank transfer</td></tr>
+                <tr><td>May 1</td><td>Alimony</td><td>$1,000.00</td><td>Check #2841</td></tr>
+              </tbody>
+            </table>
+            <div style="display:flex;justify-content:space-between;margin-top:12px;font-weight:700;font-size:13px"><span>Total paid (period)</span><span>$8,400.00</span></div>
+            <div style="font-size:9.5px;color:#7a86a3;margin-top:14px;border-top:1px solid rgba(21,32,63,.12);padding-top:8px">Not legal, financial, or tax advice. These are self-reported records and attached receipts; not a guarantee of court admissibility.</div>
+          </div>
+        </div>
+        <div style="flex:.8">
+          <div class="card" style="padding:20px;margin-bottom:16px">
+            <div class="lab" style="margin-bottom:12px">Export statement</div>
+            <div class="field"><span class="lab">Date range</span><input class="inp" value="Jan 1 – Jun 30, 2026"></div>
+            <div class="field"><span class="lab">Format</span><div class="seg"><span class="on">PDF</span><span>CSV</span></div></div>
+            <span class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px">Generate statement ↓</span>
+          </div>
+          <div class="card" style="padding:20px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><div class="lab">Receipt vault</div><span class="pill teal">13 stored</span></div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px">
+              <div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div><div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div><div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div><div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div><div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div><div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div><div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div><div style="aspect-ratio:1;background:var(--navy2);border-radius:4px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. PAYWALL ================= -->
+<div class="cap">05 — <b>Paywall</b> · gate the records, never the lure</div>
+<section class="frame" id="screen-paywall">
+  <div class="glow" style="width:680px;height:680px;left:50%;transform:translateX(-50%);top:-280px"></div>
+  <div style="text-align:center;padding:50px 48px 8px">
+    <div class="eyebrow">Pricing</div>
+    <h2 class="display" style="font-size:40px;margin:16px 0 8px">Gate the records,<br>never the <span class="gold-text">lure.</span></h2>
+    <p class="muted" style="font-size:15px">The countdown’s always free. Pay to keep the proof.</p>
+    <div style="margin-top:20px"><span class="toggle"><span>Monthly</span><span class="on">Annual · save 17%</span></span></div>
+  </div>
+  <div class="price" style="padding:26px 48px 50px">
+    <div class="plan">
+      <div class="lab">On Parole</div>
+      <div class="price-n">$0</div>
+      <div class="muted" style="font-size:12px">free forever</div>
+      <ul>
+        <li><span class="c">✓</span> 1 Freedom Countdown</li>
+        <li><span class="c">✓</span> Humor &amp; Nerd modes + share cards</li>
+        <li><span class="c">✓</span> Log payments &amp; receipts</li>
+        <li><span class="x">✕</span> Proof Vault export locked</li>
+      </ul>
+      <span class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:22px">Start free</span>
+    </div>
+    <div class="plan feat">
+      <div class="ribbon">Most popular</div>
+      <div class="lab" style="color:var(--gold2)">Done · Pro</div>
+      <div class="price-n gold-text">$42<span style="font-size:16px;-webkit-text-fill-color:var(--muted);color:var(--muted)">/yr</span></div>
+      <div class="muted" style="font-size:12px">that’s $3.50/mo · or $4.20 monthly</div>
+      <ul>
+        <li><span class="c">✓</span> Everything in Free</li>
+        <li><span class="c">✓</span> Unlimited countdowns &amp; logging</li>
+        <li><span class="c">✓</span> Proof Vault — PDF + CSV export</li>
+        <li><span class="c">✓</span> Receipt storage &amp; monthly report</li>
+      </ul>
+      <span class="btn btn-gold" style="width:100%;justify-content:center;margin-top:22px">Go Pro — $42/yr</span>
+    </div>
+    <div class="plan">
+      <div class="lab">War Chest</div>
+      <div class="price-n">$120<span style="font-size:16px;color:var(--muted)">/yr</span></div>
+      <div class="pill" style="margin-top:4px">Coming soon</div>
+      <ul>
+        <li><span class="x">+</span> Everything in Pro</li>
+        <li><span class="x">+</span> Child-expense splitter</li>
+        <li><span class="x">+</span> Budget guardian</li>
+        <li><span class="x">+</span> Bulk “case file” export &amp; priority features</li>
+      </ul>
+      <span class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:22px;opacity:.6">Notify me</span>
+    </div>
+  </div>
+  <div class="foot"><span>Not legal, financial, or tax advice. Cancel anytime. US only at launch.</span><span>© DoneWithMyEx</span></div>
+</section>
+
+</body>
+</html>
