@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Work+Sans:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:#07080d}
+  ::selection{background:#FFC107;color:#051036}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:rgba(221,225,255,.13);border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  @keyframes dwmxFlip{0%{transform:rotateX(0deg)}50%{transform:rotateX(-90deg)}100%{transform:rotateX(-90deg)}}
+  @keyframes dwmxPulse{0%,100%{opacity:.4}50%{opacity:.78}}
+</style>
+</helmet>
+<div style="height:100vh;display:flex;flex-direction:column;background:#07080d;font-family:'Inter',sans-serif;color:#DDE1FF;overflow:hidden">
+
+  <div style="flex:1;min-height:0;display:flex">
+
+    <!-- sidebar -->
+    <aside style="width:248px;flex-shrink:0;background:#070f24;border-right:1px solid rgba(221,225,255,.07);display:flex;flex-direction:column;padding:24px 16px">
+      <div style="display:flex;align-items:center;gap:11px;padding:0 6px;margin-bottom:30px">
+        <img src="assets/crow-cut.png" alt="" style="width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5))">
+        <div style="line-height:.94">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;letter-spacing:.01em;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">DONE</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10px;letter-spacing:.13em;color:#DDE1FF">WITH MY EX</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <button onClick="{{ goDashboard }}" style="position:relative;display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;border:none;border-radius:11px;cursor:pointer;background:{{ navDashBg }};text-align:left">
+          <span style="position:absolute;left:-16px;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:{{ navDashBar }}"></span>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ navDashClr }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5M5 9.5V20h14V9.5"/></svg>
+          <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.03em;color:{{ navDashClr }}">Dashboard</span>
+        </button>
+        <button onClick="{{ goCountdown }}" style="position:relative;display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;border:none;border-radius:11px;cursor:pointer;background:{{ navCountBg }};text-align:left">
+          <span style="position:absolute;left:-16px;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:{{ navCountBar }}"></span>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ navCountClr }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.6M12 5V2.5M9.5 2.5h5"/></svg>
+          <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.03em;color:{{ navCountClr }}">Countdown</span>
+        </button>
+        <button onClick="{{ goLogger }}" style="position:relative;display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;border:none;border-radius:11px;cursor:pointer;background:{{ navLogBg }};text-align:left">
+          <span style="position:absolute;left:-16px;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:{{ navLogBar }}"></span>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ navLogClr }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v16H7zM10 9h4M10 13h4"/></svg>
+          <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.03em;color:{{ navLogClr }}">Logger</span>
+        </button>
+        <button onClick="{{ goVault }}" style="position:relative;display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;border:none;border-radius:11px;cursor:pointer;background:{{ navVaultBg }};text-align:left">
+          <span style="position:absolute;left:-16px;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:{{ navVaultBar }}"></span>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ navVaultClr }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5zM12 9v6"/><circle cx="12" cy="8.5" r="1"/></svg>
+          <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.03em;color:{{ navVaultClr }}">Vault</span>
+        </button>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <div style="border-radius:14px;padding:15px;background:linear-gradient(160deg,#13224f,#0a1638);border:1px solid rgba(255,193,7,.3);margin-bottom:14px">
+        <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#FFC107;margin-bottom:6px">Pro</div>
+        <div style="font-family:'Inter',sans-serif;font-size:11.5px;line-height:1.4;color:rgba(221,225,255,.7);margin-bottom:11px">Unlock exports &amp; receipt storage.</div>
+        <button onClick="{{ goVault }}" style="width:100%;font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.04em;padding:9px;border:none;border-radius:9px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036">Go Pro</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:6px">
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#13224f,#293359);border:1px solid rgba(221,225,255,.12);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:#97F7F6">A</div>
+        <div style="line-height:1.15;min-width:0">
+          <div style="font-family:'Inter',sans-serif;font-weight:600;font-size:12px;color:#DDE1FF">Alex M.</div>
+          <div style="font-family:'Inter',sans-serif;font-size:10px;color:rgba(221,225,255,.4)">Free plan</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- main -->
+    <main style="flex:1;min-width:0;overflow-x:hidden;overflow-y:auto;position:relative;background:radial-gradient(120% 70% at 80% -10%,#0c1430 0%,#080a14 60%)">
+      <!-- topbar -->
+      <div style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 32px;background:rgba(7,10,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(221,225,255,.06)">
+        <div>
+          <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.4)">{{ routeSub }}</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:23px;color:#DDE1FF;margin-top:3px">{{ routeTitle }}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end">
+          <div style="display:{{ layoutDisp }};align-items:center;gap:10px">
+            <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.42)">Layout</span>
+            <div style="display:inline-flex;border:1px solid rgba(221,225,255,.12);border-radius:10px;padding:3px;gap:3px;background:rgba(221,225,255,.03)">
+              <button onClick="{{ setLayoutMission }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.05em;padding:7px 13px;border:none;border-radius:8px;cursor:pointer;background:{{ bgLM }};color:{{ segLM }}">Mission Control</button>
+              <button onClick="{{ setLayoutCinematic }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.05em;padding:7px 13px;border:none;border-radius:8px;cursor:pointer;background:{{ bgLC }};color:{{ segLC }}">Cinematic</button>
+              <button onClick="{{ setLayoutEditorial }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.05em;padding:7px 13px;border:none;border-radius:8px;cursor:pointer;background:{{ bgLE }};color:{{ segLE }}">Editorial</button>
+            </div>
+          </div>
+          <button onClick="{{ goLogger }}" style="display:flex;align-items:center;gap:8px;font-family:'Work Sans',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.03em;padding:11px 18px;border:none;border-radius:11px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036;box-shadow:0 8px 20px rgba(255,193,7,.18)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#051036" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Log a payment
+          </button>
+        </div>
+      </div>
+
+      <!-- ====================================================== -->
+      <!-- 1A  MISSION CONTROL                                     -->
+      <!-- ====================================================== -->
+      <div style="display:{{ dashADisp }};padding:28px 32px 52px">
+        <div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;align-items:start;max-width:1400px">
+
+          <div style="grid-column:span 7;min-width:0;border-radius:22px;padding:30px;background:linear-gradient(160deg,#0f1d49,#0a1638);border:1px solid rgba(221,225,255,.07);display:flex;align-items:center;gap:34px;min-height:248px">
+            <div style="position:relative;width:184px;height:184px;flex-shrink:0">
+              <svg width="184" height="184" viewBox="0 0 120 120">
+                <defs><linearGradient id="ggA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE4AF"/><stop offset="1" stop-color="#FFC107"/></linearGradient></defs>
+                <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(221,225,255,.1)" stroke-width="9"/>
+                <circle cx="60" cy="60" r="52" fill="none" stroke="url(#ggA)" stroke-width="9" stroke-linecap="round" stroke-dasharray="{{ donutCirc }}" stroke-dashoffset="{{ donutOffset }}" transform="rotate(-90 60 60)"/>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;color:#DDE1FF">{{ pctText }}</span>
+                <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.45)">Served</span>
+              </div>
+            </div>
+            <div style="min-width:0">
+              <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#97F7F6;margin-bottom:8px">Freedom Clock</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(48px,5vw,68px);line-height:.92;color:#DDE1FF">{{ daysToGo }}</div>
+              <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.45);margin:4px 0 14px">Days to freedom</div>
+              <div style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(221,225,255,.6)">Last payment lands <span style="color:#FFC107;font-weight:600">{{ endLabel }}</span></div>
+              <div style="font-family:'Inter',sans-serif;font-size:12.5px;color:rgba(221,225,255,.5);margin-top:4px">{{ humanLine }} left</div>
+              <div style="height:8px;border-radius:6px;background:rgba(221,225,255,.09);overflow:hidden;margin-top:16px;max-width:380px"><div style="height:100%;width:{{ pctWidth }};background:linear-gradient(90deg,#FFE4AF,#FFC107);border-radius:6px"></div></div>
+            </div>
+          </div>
+
+          <div style="grid-column:span 5;display:flex;flex-direction:column;gap:16px;min-width:0">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:16px">
+              <div style="padding:18px;border-radius:16px;background:#0E193E">
+                <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:9px">Paid so far</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#DDE1FF">{{ paidSoFar }}</div>
+              </div>
+              <div style="padding:18px;border-radius:16px;background:#0E193E">
+                <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:9px">Left to pay</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#FFC107">{{ leftToPay }}</div>
+              </div>
+            </div>
+            <div style="border-radius:16px;padding:18px;background:linear-gradient(135deg,rgba(255,193,7,.11),rgba(255,193,7,.03));border:1px solid rgba(255,193,7,.16)">
+              <div style="display:flex;align-items:baseline;gap:9px">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ dailyCost }}</span>
+                <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(221,225,255,.5)">per day on parole</span>
+              </div>
+              <div style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.45;color:rgba(221,225,255,.55);margin-top:7px">Every day, the meter ticks closer to your last payment.</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:16px;background:#0E193E">
+              <div>
+                <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:5px">Next payment</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#DDE1FF">{{ nextAmount }} <span style="font-family:'Inter',sans-serif;font-weight:400;font-size:12px;color:rgba(221,225,255,.5)">· {{ nextPay }}</span></div>
+              </div>
+              <button onClick="{{ goLogger }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:10px 16px;border:none;border-radius:9px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036">Log it</button>
+            </div>
+          </div>
+
+          <div style="grid-column:span 8;min-width:0;border-radius:18px;background:#0E193E;padding:20px 22px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.5)">On record</span>
+              <span style="font-family:'Inter',sans-serif;font-size:11px;color:rgba(221,225,255,.4)">{{ payCount }}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:9px 6px;border-bottom:1px solid rgba(221,225,255,.08);font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(221,225,255,.38)">
+              <span>Period</span><span>Type</span><span>Receipt</span><span style="text-align:right">Amount</span>
+            </div>
+            <sc-for list="{{ payments }}" as="u" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 6px;border-bottom:1px solid rgba(221,225,255,.05)">
+                <span style="font-family:'Inter',sans-serif;font-weight:500;font-size:13px;color:#DDE1FF">{{ u.when }}</span>
+                <div style="display:flex;align-items:center;gap:8px;min-width:0"><span style="width:8px;height:8px;border-radius:2px;flex-shrink:0;background:{{ u.dot }}"></span><span style="font-family:'Inter',sans-serif;font-size:12.5px;color:rgba(221,225,255,.7)">{{ u.type }}</span></div>
+                <span style="font-family:'Inter',sans-serif;font-size:11px;color:{{ u.recClr }}">{{ u.receiptText }}</span>
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;color:#DDE1FF;text-align:right">{{ u.amount }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="grid-column:span 4;min-width:0;border-radius:18px;padding:20px;background:radial-gradient(130% 100% at 50% 0%,#0c1a47,#04102f);border:1px solid rgba(221,225,255,.06);display:flex;flex-direction:column;align-items:center;text-align:center">
+            <img src="assets/crow-cut.png" alt="" style="width:40px;height:40px;object-fit:contain;margin-bottom:12px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:#DDE1FF;line-height:1.12">{{ humanLine }}</div>
+            <div style="font-family:'Inter',sans-serif;font-size:11.5px;color:#97F7F6;margin-top:8px">{{ pctText }} served · {{ daysToGo }} days to go</div>
+            <button onClick="{{ share }}" style="width:100%;margin-top:18px;font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.04em;padding:11px;border:none;border-radius:10px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036">Share milestone</button>
+            <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.32);margin-top:13px">donewithmyex.com</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ====================================================== -->
+      <!-- 1C  CINEMATIC                                           -->
+      <!-- ====================================================== -->
+      <div style="display:{{ dashCDisp }}">
+        <div style="position:relative;overflow:hidden;padding:46px 32px 40px;background:radial-gradient(120% 130% at 50% -25%,#16234f 0%,#0a1330 55%,#070d22 100%);border-bottom:1px solid rgba(221,225,255,.06);text-align:center">
+          <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#97F7F6;margin-bottom:12px">Your last payment lands</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,40px);letter-spacing:-.01em;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:26px">{{ endLabel }}</div>
+
+          <div style="display:flex;align-items:flex-start;justify-content:center;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px">
+              <div style="position:relative;width:clamp(62px,6vw,88px);height:clamp(80px,7.6vw,112px);border-radius:13px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,4vw,58px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ yy }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div>
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Years</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px">
+              <div style="position:relative;width:clamp(62px,6vw,88px);height:clamp(80px,7.6vw,112px);border-radius:13px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,4vw,58px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ mm }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div>
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Months</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px">
+              <div style="position:relative;width:clamp(62px,6vw,88px);height:clamp(80px,7.6vw,112px);border-radius:13px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,4vw,58px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ dd }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div>
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Days</span>
+            </div>
+            <div style="width:1px;height:clamp(80px,7.6vw,112px);background:rgba(221,225,255,.12)"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px">
+              <div style="position:relative;width:clamp(62px,6vw,88px);height:clamp(80px,7.6vw,112px);border-radius:13px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,4vw,58px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ hh }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div>
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Hours</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px">
+              <div style="position:relative;width:clamp(62px,6vw,88px);height:clamp(80px,7.6vw,112px);border-radius:13px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,4vw,58px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ mi }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div>
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Mins</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px">
+              <div style="position:relative;width:clamp(62px,6vw,88px);height:clamp(80px,7.6vw,112px);border-radius:13px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden;perspective:320px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,4vw,58px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ ss }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5);z-index:3"></div><div style="position:absolute;left:0;right:0;top:0;height:50%;transform-origin:bottom center;background:linear-gradient(180deg,#22336b,#16244f);border-radius:13px 13px 0 0;backface-visibility:hidden;animation:dwmxFlip 1s infinite linear;border-bottom:1px solid rgba(0,0,0,.45);z-index:2"></div></div>
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Secs</span>
+            </div>
+          </div>
+
+          <div style="max-width:720px;margin:30px auto 0">
+            <div style="height:6px;border-radius:6px;background:rgba(221,225,255,.09);overflow:hidden"><div style="height:100%;width:{{ pctWidth }};background:linear-gradient(90deg,#FFE4AF,#FFC107);border-radius:6px;box-shadow:0 0 14px rgba(255,193,7,.5)"></div></div>
+            <div style="display:flex;justify-content:space-between;margin-top:9px;font-family:'Work Sans',sans-serif;font-weight:600;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(221,225,255,.5)"><span>{{ daysServed }} served</span><span style="color:#97F7F6">{{ pctText }} complete</span><span>{{ daysToGo }} to go</span></div>
+          </div>
+        </div>
+
+        <div style="padding:24px 32px 52px;max-width:1320px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:18px">
+            <div style="padding:18px;border-radius:15px;background:#0E193E"><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:9px">Paid so far</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;color:#DDE1FF">{{ paidSoFar }}</div></div>
+            <div style="padding:18px;border-radius:15px;background:#0E193E"><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:9px">Left to pay</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;color:#FFC107">{{ leftToPay }}</div></div>
+            <div style="padding:18px;border-radius:15px;background:#0E193E"><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:9px">Per day on parole</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;color:#DDE1FF">{{ dailyCost }}</div></div>
+            <div style="padding:18px;border-radius:15px;background:#0E193E"><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:9px">Days served</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;color:#DDE1FF">{{ daysServed }}</div></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start">
+            <div style="border-radius:18px;background:#0E193E;padding:20px 22px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.5)">On record</span><span style="font-family:'Inter',sans-serif;font-size:11px;color:rgba(221,225,255,.4)">{{ payCount }}</span></div>
+              <sc-for list="{{ payments }}" as="u" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid rgba(221,225,255,.06)">
+                  <span style="width:8px;height:8px;border-radius:2px;flex-shrink:0;background:{{ u.dot }}"></span>
+                  <div style="flex:1;min-width:0"><div style="font-family:'Inter',sans-serif;font-weight:500;font-size:13px;color:#DDE1FF">{{ u.type }}</div><div style="font-family:'Inter',sans-serif;font-size:10.5px;color:{{ u.recClr }}">{{ u.when }} · {{ u.receiptText }}</div></div>
+                  <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;color:#DDE1FF">{{ u.amount }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:16px;background:#0E193E">
+                <div><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:rgba(221,225,255,.45);margin-bottom:5px">Next payment</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#DDE1FF">{{ nextAmount }} <span style="font-family:'Inter',sans-serif;font-weight:400;font-size:12px;color:rgba(221,225,255,.5)">· {{ nextPay }}</span></div></div>
+                <button onClick="{{ goLogger }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:10px 15px;border:none;border-radius:9px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036">Log it</button>
+              </div>
+              <div style="border-radius:16px;padding:18px;background:linear-gradient(135deg,rgba(255,193,7,.1),rgba(255,193,7,.02));border:1px solid rgba(255,193,7,.16)">
+                <div style="font-family:'Inter',sans-serif;font-size:12.5px;line-height:1.5;color:rgba(221,225,255,.65)">You're <span style="color:#FFC107;font-weight:600">{{ pctText }}</span> of the way out. Keep the receipts — the proof is yours, not a memory.</div>
+                <button onClick="{{ goVault }}" style="margin-top:13px;font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:9px 15px;border:1px solid rgba(221,225,255,.16);border-radius:9px;cursor:pointer;background:transparent;color:#DDE1FF">Open Proof Vault</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================== -->
+      <!-- 1D  EDITORIAL / CALM                                    -->
+      <!-- ====================================================== -->
+      <div style="display:{{ dashDDisp }};padding:56px 32px 64px">
+        <div style="max-width:940px;margin:0 auto">
+          <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#97F7F6;margin-bottom:18px">The end is in sight</div>
+          <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,5.4vw,62px);line-height:1.02;letter-spacing:-.02em;color:#DDE1FF">You're <span style="background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ pctText }}</span> of the way out.</h1>
+          <p style="margin:20px 0 0;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;color:rgba(221,225,255,.6);max-width:560px">Your last payment lands <span style="color:#DDE1FF;font-weight:500">{{ endLabel }}</span>. That's {{ humanLine }} left — logged, proven, and ticking down.</p>
+
+          <div style="margin-top:40px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;color:#DDE1FF">{{ daysToGo }} <span style="font-size:13px;font-family:'Work Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(221,225,255,.5)">days to go</span></span><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;color:#97F7F6">{{ pctText }}</span></div>
+            <div style="height:5px;border-radius:6px;background:rgba(221,225,255,.1);overflow:hidden"><div style="height:100%;width:{{ pctWidth }};background:linear-gradient(90deg,#FFE4AF,#FFC107);border-radius:6px"></div></div>
+            <div style="display:flex;justify-content:space-between;margin-top:9px;font-family:'Work Sans',sans-serif;font-weight:600;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(221,225,255,.4)"><span>Aug 1, 2025</span><span>{{ endLabel }}</span></div>
+          </div>
+
+          <div style="height:1px;background:rgba(221,225,255,.1);margin:40px 0"></div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px">
+            <div><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.42);margin-bottom:10px">Paid so far</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;color:#DDE1FF">{{ paidSoFar }}</div></div>
+            <div style="border-left:1px solid rgba(221,225,255,.1);padding-left:28px"><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.42);margin-bottom:10px">Left to pay</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;color:#FFC107">{{ leftToPay }}</div></div>
+            <div style="border-left:1px solid rgba(221,225,255,.1);padding-left:28px"><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.42);margin-bottom:10px">Per day on parole</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;color:#DDE1FF">{{ dailyCost }}</div></div>
+          </div>
+
+          <div style="height:1px;background:rgba(221,225,255,.1);margin:40px 0"></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.5)">Recent activity</span><span style="font-family:'Inter',sans-serif;font-size:11px;color:rgba(221,225,255,.4)">{{ payCount }}</span></div>
+          <sc-for list="{{ payments }}" as="u" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid rgba(221,225,255,.07)">
+              <div style="display:flex;align-items:center;gap:13px;min-width:0"><span style="width:7px;height:7px;border-radius:2px;flex-shrink:0;background:{{ u.dot }}"></span><span style="font-family:'Inter',sans-serif;font-weight:500;font-size:14px;color:#DDE1FF">{{ u.type }}</span><span style="font-family:'Inter',sans-serif;font-size:12px;color:rgba(221,225,255,.4)">{{ u.when }}</span></div>
+              <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:#DDE1FF">{{ u.amount }}</span>
+            </div>
+          </sc-for>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:34px">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;color:rgba(221,225,255,.6)">Next payment <span style="color:#DDE1FF;font-weight:600;font-family:'Space Grotesk',sans-serif">{{ nextAmount }}</span> · {{ nextPay }}</div>
+            <button onClick="{{ goLogger }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:12px 22px;border:none;border-radius:11px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036">Log it</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================== -->
+      <!-- COUNTDOWN (shared)                                      -->
+      <!-- ====================================================== -->
+      <div style="display:{{ countdownDisp }};padding:30px 32px 56px">
+        <div style="max-width:1100px;margin:0 auto">
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:6px">
+            <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(221,225,255,.5);margin-bottom:8px">Your last payment lands</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.01em;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:18px">{{ endLabel }}</div>
+            <div style="display:inline-flex;border:1px solid rgba(221,225,255,.12);border-radius:11px;padding:3px;gap:3px;background:rgba(221,225,255,.03)">
+              <button onClick="{{ styleFlip }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;background:{{ bgFlip }};color:{{ segFlip }}">Flip</button>
+              <button onClick="{{ styleStraight }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;background:{{ bgStraight }};color:{{ segStraight }}">Straight</button>
+              <button onClick="{{ styleMinimal }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;background:{{ bgMinimal }};color:{{ segMinimal }}">Minimal</button>
+            </div>
+          </div>
+
+          <div style="display:{{ flipDisp }};justify-content:center;align-items:flex-start;gap:clamp(7px,1.2vw,16px);flex-wrap:wrap;margin-top:26px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="position:relative;width:clamp(58px,5.4vw,80px);height:clamp(74px,7vw,104px);border-radius:12px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 22px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,3.6vw,52px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ yy }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Years</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="position:relative;width:clamp(58px,5.4vw,80px);height:clamp(74px,7vw,104px);border-radius:12px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 22px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,3.6vw,52px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ mm }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Months</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="position:relative;width:clamp(58px,5.4vw,80px);height:clamp(74px,7vw,104px);border-radius:12px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 22px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,3.6vw,52px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ dd }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Days</span></div>
+            <div style="width:1px;height:clamp(74px,7vw,104px);background:rgba(221,225,255,.12)"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="position:relative;width:clamp(58px,5.4vw,80px);height:clamp(74px,7vw,104px);border-radius:12px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 22px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,3.6vw,52px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ hh }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Hours</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="position:relative;width:clamp(58px,5.4vw,80px);height:clamp(74px,7vw,104px);border-radius:12px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 22px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,3.6vw,52px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ mi }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5)"></div></div><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Mins</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="position:relative;width:clamp(58px,5.4vw,80px);height:clamp(74px,7vw,104px);border-radius:12px;background:linear-gradient(180deg,#1f2f63,#16244f 49%,#0e1942 51%,#0b1539);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 22px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;overflow:hidden;perspective:300px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,3.6vw,52px);line-height:1;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ ss }}</span><div style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.5);z-index:3"></div><div style="position:absolute;left:0;right:0;top:0;height:50%;transform-origin:bottom center;background:linear-gradient(180deg,#22336b,#16244f);border-radius:12px 12px 0 0;backface-visibility:hidden;animation:dwmxFlip 1s infinite linear;border-bottom:1px solid rgba(0,0,0,.45);z-index:2"></div></div><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(221,225,255,.45)">Secs</span></div>
+          </div>
+
+          <div style="display:{{ straightDisp }};flex-direction:column;align-items:center;gap:14px;margin-top:30px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,5vw,64px);letter-spacing:.05em;color:#DDE1FF">{{ straightStr }}</div>
+            <div style="display:flex;gap:clamp(22px,4vw,52px);font-family:'Work Sans',sans-serif;font-weight:600;font-size:10px;letter-spacing:.14em;color:rgba(221,225,255,.42);text-transform:uppercase"><span>Yr</span><span>Mo</span><span>Dy</span><span>Hr</span><span>Min</span><span>Sec</span></div>
+          </div>
+
+          <div style="display:{{ minimalDisp }};flex-direction:column;align-items:center;gap:4px;margin-top:24px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(110px,15vw,180px);line-height:.85;background:linear-gradient(135deg,#FFE4AF,#FFC107);-webkit-background-clip:text;background-clip:text;color:transparent">{{ daysToGo }}</div>
+            <div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:rgba(221,225,255,.5)">Days to freedom</div>
+          </div>
+
+          <div style="max-width:620px;margin:34px auto 0">
+            <div style="height:7px;border-radius:6px;background:rgba(221,225,255,.09);overflow:hidden"><div style="height:100%;width:{{ pctWidth }};background:linear-gradient(90deg,#FFE4AF,#FFC107);border-radius:6px"></div></div>
+            <div style="display:flex;justify-content:space-between;margin-top:9px;font-family:'Work Sans',sans-serif;font-weight:600;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(221,225,255,.5)"><span>{{ daysServed }} served</span><span style="color:#97F7F6">{{ pctText }}</span><span>{{ daysToGo }} to go</span></div>
+          </div>
+
+          <div style="height:1px;background:rgba(221,225,255,.1);margin:36px 0 24px"></div>
+
+          <div style="display:flex;justify-content:center;margin-bottom:22px">
+            <div style="display:inline-flex;border:1px solid rgba(221,225,255,.12);border-radius:11px;padding:3px;gap:3px;background:rgba(221,225,255,.03)">
+              <button onClick="{{ modeStraight }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;background:{{ bgMStraight }};color:{{ segMStraight }}">Straight</button>
+              <button onClick="{{ modeHumor }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;background:{{ bgMHumor }};color:{{ segMHumor }}">Humor</button>
+              <button onClick="{{ modeNerd }}" style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;background:{{ bgMNerd }};color:{{ segMNerd }}">Nerd</button>
+            </div>
+          </div>
+
+          <div style="display:{{ mStraightDisp }}">
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+              <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-radius:14px;background:#0E193E"><span style="font-family:'Inter',sans-serif;font-size:12.5px;color:rgba(221,225,255,.55)">Days served</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#DDE1FF">{{ daysServed }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-radius:14px;background:#0E193E"><span style="font-family:'Inter',sans-serif;font-size:12.5px;color:rgba(221,225,255,.55)">Days to go</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#97F7F6">{{ daysToGo }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-radius:14px;background:#0E193E"><span style="font-family:'Inter',sans-serif;font-size:12.5px;color:rgba(221,225,255,.55)">Sentence complete</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#DDE1FF">{{ pctText }}</span></div>
+            </div>
+          </div>
+
+          <div style="display:{{ mHumorDisp }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+              <sc-for list="{{ humor }}" as="u" hint-placeholder-count="8">
+                <div style="display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:14px;background:#0E193E">
+                  <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#97F7F6">{{ u.count }}</div>
+                  <div style="font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;color:#DDE1FF;line-height:1.2">{{ u.name }}</div>
+                  <div style="font-family:'Inter',sans-serif;font-size:10.5px;color:rgba(221,225,255,.4)">{{ u.sub }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:{{ mNerdDisp }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+              <sc-for list="{{ nerd }}" as="u" hint-placeholder-count="8">
+                <div style="display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:14px;background:#0E193E">
+                  <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#FFC107">{{ u.count }}</div>
+                  <div style="font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;color:#DDE1FF;line-height:1.2">{{ u.name }}</div>
+                  <div style="font-family:'Inter',sans-serif;font-size:10.5px;color:rgba(221,225,255,.4)">{{ u.sub }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="margin-top:26px;display:flex;justify-content:center"><button onClick="{{ share }}" style="display:flex;align-items:center;gap:8px;font-family:'Work Sans',sans-serif;font-weight:700;font-size:13px;letter-spacing:.04em;padding:13px 26px;border:none;border-radius:11px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036;box-shadow:0 8px 22px rgba(255,193,7,.18)">Share this milestone</button></div>
+        </div>
+      </div>
+
+      <!-- ====================================================== -->
+      <!-- LOGGER (shared)                                         -->
+      <!-- ====================================================== -->
+      <div style="display:{{ loggerDisp }};padding:30px 32px 56px">
+        <div style="display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1fr);gap:22px;align-items:start;max-width:1200px">
+          <div style="border-radius:18px;padding:22px;background:#0E193E">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.5)">Log a payment</span>
+              <span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#97F7F6">~10 seconds</span>
+            </div>
+            <div style="display:flex;gap:8px;margin-bottom:14px">
+              <button onClick="{{ typeAlimony }}" style="flex:1;font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.03em;padding:13px 8px;border-radius:10px;cursor:pointer;background:{{ bgAlimony }};color:{{ segAlimony }};border:{{ brdAlimony }}">Spousal support</button>
+              <button onClick="{{ typeCS }}" style="flex:1;font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.03em;padding:13px 8px;border-radius:10px;cursor:pointer;background:{{ bgCS }};color:{{ segCS }};border:{{ brdCS }}">Child support</button>
+            </div>
+            <div style="border-radius:12px;overflow:hidden;margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 16px;background:#131D43;border-bottom:1px solid rgba(221,225,255,.06)"><span style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(221,225,255,.55)">Amount</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#DDE1FF">{{ logAmount }}</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 16px;background:#131D43;border-bottom:1px solid rgba(221,225,255,.06)"><span style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(221,225,255,.55)">Month</span><span style="font-family:'Inter',sans-serif;font-weight:500;font-size:14px;color:#DDE1FF">{{ logMonth }}</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 16px;background:#131D43"><span style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(221,225,255,.55)">Receipt</span><span style="font-family:'Inter',sans-serif;font-weight:600;font-size:13px;color:#97F7F6">Attach photo ›</span></div>
+            </div>
+            <button onClick="{{ logPayment }}" style="width:100%;font-family:'Work Sans',sans-serif;font-weight:700;font-size:14px;letter-spacing:.03em;padding:15px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036;box-shadow:0 8px 20px rgba(255,193,7,.2)">Log {{ logTypeLabel }} payment</button>
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.5)">On record</span><span style="font-family:'Inter',sans-serif;font-size:11.5px;color:rgba(221,225,255,.4)">{{ payCount }}</span></div>
+            <div style="border-radius:16px;background:#0E193E;padding:6px 20px">
+              <sc-for list="{{ payments }}" as="u" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:14px;padding:14px 2px;border-bottom:1px solid rgba(221,225,255,.06)">
+                  <span style="width:9px;height:9px;border-radius:2px;flex-shrink:0;background:{{ u.dot }}"></span>
+                  <div style="flex:1;min-width:0"><div style="font-family:'Inter',sans-serif;font-weight:500;font-size:14px;color:#DDE1FF">{{ u.type }}</div><div style="font-family:'Inter',sans-serif;font-size:11px;color:{{ u.recClr }}">{{ u.when }} · {{ u.receiptText }}</div></div>
+                  <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:#DDE1FF">{{ u.amount }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <button onClick="{{ goVault }}" style="width:100%;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(221,225,255,.6);background:transparent;border:1px dashed rgba(221,225,255,.16);padding:14px;border-radius:12px;cursor:pointer">
+              <svg width="11" height="13" viewBox="0 0 12 14"><rect x="1" y="6" width="10" height="7" rx="1.5" fill="rgba(221,225,255,.7)"/><path d="M3 6V4.5a3 3 0 016 0V6" stroke="rgba(221,225,255,.7)" stroke-width="1.6" fill="none"/></svg>
+              Unlock export &amp; receipt storage
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================== -->
+      <!-- VAULT (shared)                                          -->
+      <!-- ====================================================== -->
+      <div style="display:{{ vaultDisp }};padding:30px 32px 56px">
+        <div style="display:grid;grid-template-columns:minmax(320px,460px) minmax(0,1fr);gap:24px;align-items:start;max-width:1240px">
+          <div>
+            <div style="border-radius:12px;background:#fbf7ee;padding:26px 24px;box-shadow:0 22px 50px rgba(0,0,0,.45);color:#1a2240">
+              <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid #1a2240;padding-bottom:14px;margin-bottom:16px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <img src="assets/crow-cut.png" alt="" style="width:30px;height:30px;object-fit:contain">
+                  <div style="line-height:1"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;letter-spacing:.02em;color:#1a2240">DONE WITH MY EX</div><div style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#7a7565;margin-top:2px">Payment Statement</div></div>
+                </div>
+                <div style="text-align:right;font-family:'Work Sans',sans-serif;font-weight:600;font-size:9px;letter-spacing:.06em;color:#7a7565;text-transform:uppercase">{{ statementRange }}</div>
+              </div>
+              <sc-for list="{{ statementRows }}" as="r" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(26,34,64,.1)">
+                  <div style="display:flex;flex-direction:column"><span style="font-family:'Inter',sans-serif;font-weight:600;font-size:13px;color:#1a2240">{{ r.when }}</span><span style="font-family:'Inter',sans-serif;font-size:10.5px;color:#8a8470">{{ r.type }}</span></div>
+                  <div style="display:flex;align-items:center;gap:14px"><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:13px;color:{{ r.recClr }}">{{ r.rec }}</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#1a2240;min-width:58px;text-align:right">{{ r.amount }}</span></div>
+                </div>
+              </sc-for>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:15px;padding-top:13px;border-top:1.5px solid #1a2240"><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#1a2240">Total · {{ statementCount }}</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#1a2240">{{ statementTotal }}</span></div>
+              <div style="margin-top:14px;font-family:'Inter',sans-serif;font-size:9px;line-height:1.5;color:#9a9482">Organized records for negotiation, disputes &amp; peace of mind. Not legal, financial, or tax advice.</div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:16px">
+              <button style="flex:1;font-family:'Work Sans',sans-serif;font-weight:700;font-size:13px;letter-spacing:.03em;padding:14px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#FFE4AF,#FFC107);color:#051036">Download PDF</button>
+              <button style="flex:1;font-family:'Work Sans',sans-serif;font-weight:700;font-size:13px;letter-spacing:.03em;padding:14px;border:1px solid rgba(221,225,255,.16);border-radius:12px;cursor:pointer;background:transparent;color:#DDE1FF">Export CSV</button>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px"><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(221,225,255,.5)">Receipt vault</span><span style="font-family:'Inter',sans-serif;font-size:11.5px;color:rgba(221,225,255,.4)">{{ receiptCount }}</span></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px">
+              <sc-for list="{{ receipts }}" as="r" hint-placeholder-count="6">
+                <div style="aspect-ratio:3/4;border-radius:11px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#0E193E,#0E193E 7px,#101b42 7px,#101b42 14px);border:1px solid rgba(221,225,255,.08)">
+                  <div style="position:absolute;left:10px;top:10px;right:10px;height:6px;border-radius:2px;background:rgba(221,225,255,.14)"></div>
+                  <div style="position:absolute;left:10px;top:23px;width:60%;height:5px;border-radius:2px;background:rgba(221,225,255,.1)"></div>
+                  <div style="position:absolute;left:0;right:0;bottom:0;padding:9px 10px;background:linear-gradient(180deg,transparent,rgba(5,11,32,.92));display:flex;flex-direction:column"><span style="font-family:'Work Sans',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.1em;color:#97F7F6">{{ r.when }}</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#DDE1FF">{{ r.amount }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- toast -->
+  <div style="display:{{ toastDisp }};position:fixed;left:50%;bottom:28px;transform:translateX(-50%);align-items:center;background:rgba(8,16,44,.95);border:1px solid rgba(151,247,246,.3);color:#97F7F6;font-family:'Work Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.05em;padding:12px 20px;border-radius:11px;backdrop-filter:blur(8px);z-index:90">{{ toast }}</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;monthlyAmount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2400,&quot;min&quot;:0,&quot;max&quot;:20000,&quot;step&quot;:50,&quot;unit&quot;:&quot;$/mo&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Demo data&quot;},&quot;paroleStart&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2025-08-01&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo data&quot;},&quot;paroleEnd&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2028-06-22&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo data&quot;}}">
+class Component extends DCLogic {
+  state = {
+    layout:'mission', route:'dashboard', cstyle:'flip', cmode:'humor',
+    logType:'alimony', logged:[], now:Date.now(), toast:'',
+  };
+  componentDidMount(){ try{ const L=localStorage.getItem('dwmx_layout'); if(['mission','cinematic','editorial'].includes(L)) this.setState({layout:L}); }catch(e){} this._t=setInterval(()=>this.setState({now:Date.now()}),1000); }
+  componentWillUnmount(){ if(this._t)clearInterval(this._t); if(this._to)clearTimeout(this._to); }
+
+  setLayout(l){ this.setState({layout:l}); try{ localStorage.setItem('dwmx_layout',l); }catch(e){} }
+
+  START(){ const d=new Date(this.props.paroleStart||'2025-08-01'); return isNaN(d.getTime())?new Date(2025,7,1).getTime():d.getTime(); }
+  END(){ const d=new Date(this.props.paroleEnd||'2028-06-22'); return isNaN(d.getTime())?new Date(2028,5,22).getTime():d.getTime(); }
+  AMOUNT(){ const a=Number(this.props.monthlyAmount); return isFinite(a)&&a>0?a:2400; }
+
+  pad2(n){ n=Math.max(0,Math.floor(n)); return String(n).padStart(2,'0'); }
+  sup(s){ const m={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'}; return String(s).split('').map(c=>m[c]||'').join(''); }
+  fmtCount(n){
+    if(!isFinite(n)) return '∞';
+    if(n>=1e12){ const e=n.toExponential(2).split('e'); return e[0]+' × 10'+this.sup(String(parseInt(e[1],10))); }
+    if(n>=1000) return Math.round(n).toLocaleString('en-US');
+    if(n>=100) return String(Math.round(n));
+    return (Math.round(n*10)/10).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
+  }
+  plural(n,w){ return n+' '+w+(n===1?'':'s'); }
+
+  breakdown(fromMs,toMs){
+    let from=new Date(fromMs), to=new Date(toMs);
+    if(to<=from) return {years:0,months:0,days:0,hours:0,mins:0,secs:0};
+    let years=to.getFullYear()-from.getFullYear();
+    let months=to.getMonth()-from.getMonth();
+    let days=to.getDate()-from.getDate();
+    let hours=to.getHours()-from.getHours();
+    let mins=to.getMinutes()-from.getMinutes();
+    let secs=to.getSeconds()-from.getSeconds();
+    if(secs<0){secs+=60;mins--;}
+    if(mins<0){mins+=60;hours--;}
+    if(hours<0){hours+=24;days--;}
+    if(days<0){ const pm=new Date(to.getFullYear(),to.getMonth(),0).getDate(); days+=pm; months--; }
+    if(months<0){months+=12;years--;}
+    return {years,months,days,hours,mins,secs};
+  }
+
+  doShare(){ this.setState({toast:'Countdown link copied'}); if(this._to) clearTimeout(this._to); this._to=setTimeout(()=>this.setState({toast:''}),1900); }
+
+  logPayment(amt){
+    const t=this.state.logType;
+    const item={id:'u'+Date.now(),type:t==='child_support'?'Child support':'Spousal support',isCS:t==='child_support',amount:'$'+Math.round(amt).toLocaleString('en-US'),when:'Just now',receipt:true};
+    this.setState(s=>({logged:[item,...s.logged],toast:'Payment logged'}));
+    if(this._to) clearTimeout(this._to); this._to=setTimeout(()=>this.setState({toast:''}),1900);
+  }
+
+  renderVals(){
+    const { layout, route, cstyle, cmode, logType, now } = this.state;
+    const START=this.START(), END=this.END(), AMT=this.AMOUNT();
+    const total=END-START;
+    const elapsed=Math.min(Math.max(now-START,0),total);
+    const remainMs=Math.max(END-now,0);
+    const pct=total>0?(elapsed/total)*100:0;
+    const pctR=Math.round(pct*10)/10;
+    const daysToGo=Math.ceil(remainMs/86400000);
+    const daysServed=Math.floor(elapsed/86400000);
+    const bd=this.breakdown(now,END);
+    const remainSec=remainMs/1000;
+
+    const humorRaw=[
+      ['Stairways to Heaven','8m 02s, back-to-back',482],
+      ['Taco Tuesdays','one per week',604800],
+      ['Oppenheimers','3-hour screenings',10800],
+      ['Solar Cycles','one sunrise a day',86400],
+      ['Snooze Buttons','9-minute snoozes',540],
+      ['Therapy Sessions','one a week',604800],
+      ['Guilt Trips','one a day',86400],
+      ['Tinder Left-Swipes','one every 2 sec',2],
+    ];
+    const nerdRaw=[
+      ['Fortnights','14 days each',1209600],
+      ['Lunar Months','29.53 days each',2551443],
+      ['Martian Years','686.98 sols each',59355072],
+      ['Dog Years','7× human years',4508229],
+      ['Olympiads','every 4 years',126230400],
+      ['Heartbeats','~70 bpm',0.857143],
+      ['Microfortnights','1.2096 s each',1.2096],
+      ['Nanoseconds','1 billionth of a sec',1e-9],
+    ];
+    const mk=(arr)=>arr.map(([name,sub,sec],i)=>({name,sub,count:this.fmtCount(remainSec/sec),$index:i}));
+
+    const avgMonth=2629800000;
+    const monthsTotal=Math.round(total/avgMonth);
+    const paymentsMade=Math.max(0,Math.floor(elapsed/avgMonth));
+    const paidSoFar=paymentsMade*AMT;
+    const leftToPay=Math.max(0,(monthsTotal-paymentsMade))*AMT;
+    const dailyCost=AMT*12/365;
+    const fmtUSD=(n)=>'$'+Math.round(n).toLocaleString('en-US');
+    const seg=(a)=>a?'#FFC107':'rgba(221,225,255,.58)';
+    const bgseg=(a)=>a?'rgba(255,193,7,.14)':'transparent';
+    const circ=2*Math.PI*52;
+    const nowD=new Date(now);
+    const endLabel=new Date(END).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+    const logMonth=nowD.toLocaleString('en-US',{month:'long',year:'numeric'});
+    const logTypeLabel=logType==='child_support'?'Child support':'Spousal support';
+    const histPattern=[['Spousal support',false,AMT],['Spousal support',false,AMT],['Child support',true,Math.round(AMT/3)],['Spousal support',false,AMT],['Spousal support',false,AMT],['Spousal support',false,AMT]];
+    const demoPays=histPattern.map((p,i)=>{const d=new Date(nowD.getFullYear(),nowD.getMonth()-(i+1),1);return {id:'d'+i,type:p[0],isCS:p[1],amount:fmtUSD(p[2]),when:d.toLocaleString('en-US',{month:'short',year:'numeric'}),receipt:i!==4};});
+    const allPays=this.state.logged.concat(demoPays).map(u=>({...u,dot:u.isCS?'#97F7F6':'#FFC107',receiptText:u.receipt?'Receipt attached':'Receipt pending',recClr:u.receipt?'rgba(151,247,246,.85)':'rgba(221,225,255,.4)'}));
+    const stRowsRaw=histPattern.slice(0,5).map((p,i)=>{const d=new Date(nowD.getFullYear(),nowD.getMonth()-(i+1),1);return {when:d.toLocaleString('en-US',{month:'short',year:'numeric'}),type:p[0],amt:p[2],receipt:i!==4};});
+    const stTotal=stRowsRaw.reduce((s,r)=>s+r.amt,0);
+    const statementRows=stRowsRaw.map(r=>({when:r.when,type:r.type,amount:fmtUSD(r.amt),rec:r.receipt?'✓':'—',recClr:r.receipt?'#0e8a6b':'#b9b2a0'}));
+    const statementRange=stRowsRaw.length?stRowsRaw[stRowsRaw.length-1].when+' – '+stRowsRaw[0].when:'';
+    const receipts=demoPays.filter(p=>p.receipt).map(p=>({when:p.when.split(' ')[0].toUpperCase(),amount:p.amount}));
+    const nextD=new Date(nowD.getFullYear(),nowD.getMonth()+1,1);
+    const nextPay=nextD.toLocaleString('en-US',{month:'long',day:'numeric'});
+
+    const lM=layout==='mission',lC=layout==='cinematic',lE=layout==='editorial';
+    const rDash=route==='dashboard',rCount=route==='countdown',rLog=route==='logger',rVault=route==='vault';
+    const tb=(a)=>a?'linear-gradient(135deg,#FFE4AF,#FFC107)':'rgba(221,225,255,.05)';
+    const tc=(a)=>a?'#051036':'rgba(221,225,255,.6)';
+    const nb=(a)=>a?'rgba(255,193,7,.1)':'transparent';
+    const nc=(a)=>a?'#FFC107':'rgba(221,225,255,.62)';
+    const nbar=(a)=>a?'#FFC107':'transparent';
+    const titles={dashboard:'Your freedom plan',countdown:'Freedom Countdown',logger:'Payment Logger',vault:'Proof Vault'};
+    const subs={dashboard:nowD.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}),countdown:'Counting down to '+endLabel,logger:'Log it. Prove it.',vault:'Your proof, on paper.'};
+
+    return {
+      layout, route,
+      setLayoutMission:()=>this.setLayout('mission'),
+      setLayoutCinematic:()=>this.setLayout('cinematic'),
+      setLayoutEditorial:()=>this.setLayout('editorial'),
+      goDashboard:()=>this.setState({route:'dashboard'}),
+      goCountdown:()=>this.setState({route:'countdown'}),
+      goLogger:()=>this.setState({route:'logger'}),
+      goVault:()=>this.setState({route:'vault'}),
+      styleFlip:()=>this.setState({cstyle:'flip'}),
+      styleStraight:()=>this.setState({cstyle:'straight'}),
+      styleMinimal:()=>this.setState({cstyle:'minimal'}),
+      modeStraight:()=>this.setState({cmode:'straight'}),
+      modeHumor:()=>this.setState({cmode:'humor'}),
+      modeNerd:()=>this.setState({cmode:'nerd'}),
+      typeAlimony:()=>this.setState({logType:'alimony'}),
+      typeCS:()=>this.setState({logType:'child_support'}),
+      share:()=>this.doShare(),
+      logPayment:()=>this.logPayment(AMT),
+
+      bgLM:bgseg(lM),segLM:seg(lM),bgLC:bgseg(lC),segLC:seg(lC),bgLE:bgseg(lE),segLE:seg(lE),
+      navDashBg:nb(rDash),navDashClr:nc(rDash),navDashBar:nbar(rDash),
+      navCountBg:nb(rCount),navCountClr:nc(rCount),navCountBar:nbar(rCount),
+      navLogBg:nb(rLog),navLogClr:nc(rLog),navLogBar:nbar(rLog),
+      navVaultBg:nb(rVault),navVaultClr:nc(rVault),navVaultBar:nbar(rVault),
+      routeTitle:titles[route]||'', routeSub:subs[route]||'',
+
+      dashADisp:(lM&&rDash)?'block':'none',
+      dashCDisp:(lC&&rDash)?'block':'none',
+      dashDDisp:(lE&&rDash)?'block':'none',
+      layoutDisp:rDash?'flex':'none',
+      countdownDisp:rCount?'block':'none',
+      loggerDisp:rLog?'block':'none',
+      vaultDisp:rVault?'block':'none',
+
+      pctText:pctR.toFixed(1)+'%', pctWidth:pct.toFixed(2)+'%',
+      daysToGo:daysToGo.toLocaleString('en-US'), daysServed:daysServed.toLocaleString('en-US'),
+      humanLine:this.plural(bd.years,'year')+'  ·  '+this.plural(bd.months,'month')+'  ·  '+this.plural(bd.days,'day'),
+      donutCirc:circ.toFixed(1), donutOffset:(circ*(1-pct/100)).toFixed(1),
+      endLabel,
+      paidSoFar:fmtUSD(paidSoFar), leftToPay:fmtUSD(leftToPay),
+      dailyCost:'$'+(Math.round(dailyCost*100)/100).toFixed(2),
+      nextPay, nextAmount:fmtUSD(AMT), onTrackText:'On track',
+      payments:allPays, payCount:allPays.length+' on record',
+
+      yy:this.pad2(bd.years), mm:this.pad2(bd.months), dd:this.pad2(bd.days),
+      hh:this.pad2(bd.hours), mi:this.pad2(bd.mins), ss:this.pad2(bd.secs),
+      straightStr:[bd.years,bd.months,bd.days,bd.hours,bd.mins,bd.secs].map(n=>this.pad2(n)).join(':'),
+      flipDisp:cstyle==='flip'?'flex':'none', straightDisp:cstyle==='straight'?'flex':'none', minimalDisp:cstyle==='minimal'?'flex':'none',
+      segFlip:seg(cstyle==='flip'),segStraight:seg(cstyle==='straight'),segMinimal:seg(cstyle==='minimal'),
+      bgFlip:bgseg(cstyle==='flip'),bgStraight:bgseg(cstyle==='straight'),bgMinimal:bgseg(cstyle==='minimal'),
+
+      mStraightDisp:cmode==='straight'?'block':'none', mHumorDisp:cmode==='humor'?'block':'none', mNerdDisp:cmode==='nerd'?'block':'none',
+      segMStraight:seg(cmode==='straight'),segMHumor:seg(cmode==='humor'),segMNerd:seg(cmode==='nerd'),
+      bgMStraight:bgseg(cmode==='straight'),bgMHumor:bgseg(cmode==='humor'),bgMNerd:bgseg(cmode==='nerd'),
+      humor:mk(humorRaw), nerd:mk(nerdRaw),
+
+      logAmount:fmtUSD(AMT), logMonth, logTypeLabel,
+      segAlimony:seg(logType==='alimony'),segCS:seg(logType==='child_support'),
+      bgAlimony:bgseg(logType==='alimony'),bgCS:bgseg(logType==='child_support'),
+      brdAlimony:logType==='alimony'?'1px solid rgba(255,193,7,.5)':'1px solid rgba(221,225,255,.12)',
+      brdCS:logType==='child_support'?'1px solid rgba(255,193,7,.5)':'1px solid rgba(221,225,255,.12)',
+
+      statementRows, statementTotal:fmtUSD(stTotal), statementRange, statementCount:stRowsRaw.length+' payments',
+      receipts, receiptCount:receipts.length+' receipts',
+
+      toast:this.state.toast, toastDisp:this.state.toast?'flex':'none',
+    };
+  }
+}
+</script>
+</body>
+</html>
