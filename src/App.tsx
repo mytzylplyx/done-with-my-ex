@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef, useState } from 'react'
 import { Sidebar } from '@/components/Sidebar'
 import { Topbar } from '@/components/Topbar'
@@ -11,6 +13,7 @@ import { Vault } from '@/components/Vault'
 import { computeFreedom, DEFAULT_PROPS } from '@/lib/freedom'
 import type { CMode, CStyle, Layout, LogType, LoggedItem, Route } from '@/lib/freedom'
 import { useBreakpoint } from '@/lib/useBreakpoint'
+import { useHydrated } from '@/lib/useHydrated'
 import { C, fontBody } from '@/lib/tokens'
 
 const freedomConfig = DEFAULT_PROPS
@@ -50,9 +53,13 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  const mounted = useHydrated()
   const bp = useBreakpoint()
   const isMobile = bp === 'mobile'
 
+  // The app is time- and localStorage-driven, so gate the first paint on the
+  // hydration flag (useHydrated): server and first client render both return the
+  // placeholder below, keeping hydration clean before the real UI + ticking clock.
   // Drive every countdown/progress visual off a single ticking clock.
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 1000)
@@ -98,6 +105,11 @@ export default function App() {
   }
   const goLogger = () => setRoute('logger')
   const goVault = () => setRoute('vault')
+
+  // Placeholder for SSR + the first client render (see mount effect above).
+  if (!mounted) {
+    return <div style={{ height: '100vh', background: C.page }} />
+  }
 
   const vals = computeFreedom(freedomConfig, { route, logType, logged, now })
 

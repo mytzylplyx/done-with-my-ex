@@ -12,6 +12,17 @@ dist-ssr
 .env
 .env.local
 
+# Next.js
+.next/
+/out/
+next-env.d.ts
+
+# Vercel
+.vercel
+
+# Claude Code local settings
+.claude/settings.local.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
