@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DONE WITH MY EX — The Yard, After Dark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --concrete: oklch(0.20 0.012 70);
+    --concrete-deep: oklch(0.16 0.010 68);
+    --panel: oklch(0.24 0.014 72);
+    --panel-ledger: oklch(0.255 0.014 74);
+    --panel-line: oklch(0.32 0.012 72);
+    --hazard: oklch(0.70 0.185 48);
+    --hazard-bright: oklch(0.745 0.180 52);
+    --ember: oklch(0.74 0.130 66);
+    --steel: oklch(0.90 0.012 82);
+    --steel-dim: oklch(0.66 0.012 78);
+    --steel-mute: oklch(0.54 0.010 76);
+    --acid: oklch(0.78 0.155 128);
+    --tape-dark: oklch(0.14 0.010 66);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--concrete-deep);
+    font-family:'Inter',system-ui,sans-serif;
+    color: var(--steel);
+    -webkit-font-smoothing:antialiased;
+  }
+  .art{
+    width:800px; margin:0 auto;
+    background: var(--concrete);
+    position:relative;
+    overflow:hidden;
+    background-image:
+      radial-gradient(160px 120px at 78% 0%, oklch(0.30 0.020 66 / 0.55), transparent 70%),
+      repeating-linear-gradient(0deg, transparent 0 26px, oklch(0.15 0.008 66 / 0.35) 26px 27px);
+    border-left:1px solid oklch(0.28 0.010 70);
+    border-right:1px solid oklch(0.28 0.010 70);
+  }
+  /* hazard tape rule */
+  .tape{ height:12px; background:
+      repeating-linear-gradient(-45deg, var(--hazard) 0 16px, var(--tape-dark) 16px 32px); }
+  .lamp-note{ position:absolute; top:14px; right:22px; font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px; letter-spacing:.05em; color:var(--steel-mute); text-align:right; line-height:1.5;}
+  .lamp-note b{ color:var(--ember); font-weight:500;}
+
+  /* TOP BAR */
+  .topbar{ display:flex; align-items:center; gap:20px; padding:16px 26px 15px;
+    border-bottom:1px solid var(--panel-line); position:relative; z-index:2;}
+  .wordmark{ font-family:'Oswald',sans-serif; font-weight:600; font-size:23px;
+    letter-spacing:.14em; color:var(--steel); text-transform:uppercase; line-height:1; white-space:nowrap;}
+  .wordmark .mid{ color:var(--hazard-bright); }
+  .nav{ display:flex; gap:18px; margin-left:6px; font-family:'IBM Plex Mono',monospace;
+    font-size:11px; letter-spacing:.08em; color:var(--steel-mute); text-transform:uppercase;}
+  .nav .on{ color:var(--steel); position:relative;}
+  .nav .on::after{ content:""; position:absolute; left:0; right:0; bottom:-5px; height:2px; background:var(--hazard);}
+  .btn{ margin-left:auto; font-family:'Oswald',sans-serif; font-weight:600; font-size:12.5px;
+    letter-spacing:.10em; text-transform:uppercase; color:var(--tape-dark);
+    background:var(--hazard); border:none; padding:9px 16px; border-radius:2px; white-space:nowrap;}
+
+  /* HERO */
+  .hero{ padding:26px 26px 22px; position:relative; z-index:2;}
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.30em;
+    text-transform:uppercase; color:var(--hazard-bright); margin:0 0 8px;}
+  .release{ font-family:'Oswald',sans-serif; font-weight:700; font-size:66px; line-height:.92;
+    letter-spacing:.005em; color:var(--steel); text-transform:uppercase; margin:0;}
+  .subhead{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--steel-dim);
+    margin:11px 0 0; letter-spacing:.01em;}
+  .subhead .k{ color:var(--acid); }
+
+  /* countdown */
+  .clock{ display:flex; gap:10px; margin:22px 0 20px;}
+  .cell{ flex:1; background:var(--panel); border:1px solid var(--panel-line); border-radius:3px;
+    padding:12px 6px 9px; text-align:center;}
+  .cell .num{ font-family:'Oswald',sans-serif; font-weight:600; font-size:38px; line-height:1;
+    color:var(--steel); letter-spacing:.01em;}
+  .cell.lead .num{ color:var(--hazard-bright);}
+  .cell .lbl{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--steel-mute); margin-top:6px;}
+
+  /* sentence ruler */
+  .ruler-head{ display:flex; justify-content:space-between; align-items:baseline;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--steel-dim);
+    text-transform:uppercase; margin-bottom:7px;}
+  .ruler-head .pct{ color:var(--hazard-bright); font-weight:600; letter-spacing:.02em;}
+  .ruler{ height:26px; position:relative; background:var(--concrete-deep);
+    border:1px solid var(--panel-line); border-radius:2px; overflow:hidden;}
+  .ruler .fill{ position:absolute; inset:0 auto 0 0; width:31.6%;
+    background: repeating-linear-gradient(-45deg, var(--hazard) 0 9px, var(--hazard-bright) 9px 18px);}
+  .ruler .ticks{ position:absolute; inset:0; display:flex;}
+  .ruler .ticks span{ flex:1; border-right:1px solid oklch(0.30 0.010 70 / 0.7);}
+  .ruler .ticks span:nth-child(5n+1){ border-right-color: oklch(0.42 0.012 72 / 0.9);}
+  .ruler .marker{ position:absolute; top:0; bottom:0; left:31.6%; width:2px; background:var(--acid);}
+
+  /* HUMOR ROW */
+  .humor{ display:flex; gap:12px; padding:2px 26px 24px; position:relative; z-index:2;}
+  .chip{ flex:1; background:var(--panel); border:1px solid var(--panel-line);
+    border-radius:3px; padding:14px 14px 13px;}
+  .chip .big{ font-family:'Oswald',sans-serif; font-weight:600; font-size:29px; line-height:1;
+    color:var(--ember); letter-spacing:.005em;}
+  .chip .unit{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.10em;
+    text-transform:uppercase; color:var(--steel); margin:7px 0 6px;}
+  .chip .sub{ font-size:11.5px; line-height:1.45; color:var(--steel-mute);}
+
+  /* ON RECORD ledger */
+  .record{ margin:0 26px 22px; background:var(--panel-ledger); border:1px solid var(--panel-line);
+    border-radius:4px; position:relative; z-index:2;}
+  .rec-top{ display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px; border-bottom:1px solid var(--panel-line);}
+  .rec-title{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--steel);}
+  .rec-no{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--steel-mute);}
+  .rec-no b{ color:var(--ember); font-weight:500;}
+  .strip{ display:flex; border-bottom:1px solid var(--panel-line);}
+  .strip .s{ flex:1; padding:11px 16px; border-right:1px solid var(--panel-line);}
+  .strip .s:last-child{ border-right:none;}
+  .strip .s .l{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--steel-mute); margin-bottom:5px;}
+  .strip .s .v{ font-family:'Oswald',sans-serif; font-weight:600; font-size:20px; color:var(--steel); letter-spacing:.01em;}
+  .strip .s.pay .v{ color:var(--acid);}
+  .strip .s.owe .v{ color:var(--hazard-bright);}
+  table.ledger{ width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace;}
+  table.ledger td{ padding:11px 16px; font-size:12px; color:var(--steel-dim);
+    border-bottom:1px solid oklch(0.30 0.010 70 / 0.55);}
+  table.ledger tr:last-child td{ border-bottom:none;}
+  .ld-date{ color:var(--steel-mute); letter-spacing:.03em; width:88px;}
+  .ld-type{ color:var(--steel);}
+  .ld-amt{ text-align:right; color:var(--steel); font-weight:500; width:92px;}
+  .ld-rc{ text-align:right; width:150px; font-size:11px; letter-spacing:.02em;}
+  .ld-rc .ok{ color:var(--acid);}
+  .ld-rc .wait{ color:var(--ember);}
+  .aside{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--steel-mute);
+    padding:9px 16px 12px; letter-spacing:.02em;}
+  .aside .c{ color:var(--hazard);}
+
+  /* FOOTER */
+  .footer{ display:flex; align-items:center; justify-content:space-between;
+    padding:14px 26px 18px; border-top:1px solid var(--panel-line); position:relative; z-index:2;}
+  .disc{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.05em; color:var(--steel-mute);}
+  .disc .bar{ color:var(--steel-dim); margin:0 8px;}
+  .site{ font-family:'Oswald',sans-serif; font-weight:500; font-size:12px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--steel-dim);}
+</style>
+</head>
+<body>
+  <div class="art">
+    <div class="tape"></div>
+    <div class="lamp-note">CELL BLOCK C &middot; 23:00 &middot; LIGHTS OUT<br><b>work-lamp buzzing</b></div>
+
+    <div class="topbar">
+      <div class="wordmark">DONE WITH <span class="mid">MY EX</span></div>
+      <nav class="nav">
+        <span class="on">Dashboard</span><span>Countdown</span><span>Logger</span><span>Vault</span>
+      </nav>
+      <button class="btn">Log a payment</button>
+    </div>
+
+    <div class="hero">
+      <p class="eyebrow">YOUR LAST PAYMENT LANDS</p>
+      <h1 class="release">June 21, 2028</h1>
+      <p class="subhead">Good behavior won't shave a day off it &mdash; but the meter <span class="k">stops</span> when the sentence does.</p>
+
+      <div class="clock">
+        <div class="cell lead"><div class="num">1</div><div class="lbl">Year</div></div>
+        <div class="cell"><div class="num">11</div><div class="lbl">Months</div></div>
+        <div class="cell"><div class="num">21</div><div class="lbl">Days</div></div>
+        <div class="cell"><div class="num">20</div><div class="lbl">Hours</div></div>
+        <div class="cell"><div class="num">04</div><div class="lbl">Mins</div></div>
+      </div>
+
+      <div class="ruler-head">
+        <span>334 SERVED</span>
+        <span class="pct">31.6% OF SENTENCE</span>
+        <span>722 TO GO</span>
+      </div>
+      <div class="ruler">
+        <div class="fill"></div>
+        <div class="ticks">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="marker"></div>
+      </div>
+    </div>
+
+    <div class="humor">
+      <div class="chip">
+        <div class="big">129,391</div>
+        <div class="unit">Stairways to Heaven</div>
+        <div class="sub">8m 02s back-to-back. Robert Plant would be exhausted. So are you.</div>
+      </div>
+      <div class="chip">
+        <div class="big">103</div>
+        <div class="unit">Taco Tuesdays</div>
+        <div class="sub">One a week. The only standing weekly commitment that still shows up.</div>
+      </div>
+      <div class="chip">
+        <div class="big">31,183,344</div>
+        <div class="unit">Tinder Left-Swipes</div>
+        <div class="sub">One every 2 sec. Statistically, better odds than the marriage.</div>
+      </div>
+    </div>
+
+    <div class="record">
+      <div class="rec-top">
+        <span class="rec-title">On record</span>
+        <span class="rec-no">INMATE NO. <b>DWM-0621-28</b></span>
+      </div>
+      <div class="strip">
+        <div class="s pay"><div class="l">Paid so far</div><div class="v">$24,000</div></div>
+        <div class="s owe"><div class="l">Left to pay</div><div class="v">$60,000</div></div>
+        <div class="s"><div class="l">Rate on parole</div><div class="v">$78.90 / day</div></div>
+      </div>
+      <table class="ledger">
+        <tr>
+          <td class="ld-date">MAY 2026</td>
+          <td class="ld-type">Spousal support</td>
+          <td class="ld-amt">$2,400</td>
+          <td class="ld-rc"><span class="ok">&#10003; RECEIPT ATTACHED</span></td>
+        </tr>
+        <tr>
+          <td class="ld-date">MAR 2026</td>
+          <td class="ld-type">Child support</td>
+          <td class="ld-amt">$800</td>
+          <td class="ld-rc"><span class="ok">&#10003; RECEIPT ATTACHED</span></td>
+        </tr>
+        <tr>
+          <td class="ld-date">JAN 2026</td>
+          <td class="ld-type">Spousal support</td>
+          <td class="ld-amt">$2,400</td>
+          <td class="ld-rc"><span class="wait">&#8226; RECEIPT PENDING</span></td>
+        </tr>
+      </table>
+      <div class="aside"><span class="c">//</span> organized records for negotiation, disputes &amp; peace of mind. child support is a milestone, not a goodbye &mdash; the kids stay.</div>
+    </div>
+
+    <div class="footer">
+      <div class="disc">Not legal, financial, or tax advice.<span class="bar">&mdash;</span>keep your own counsel.</div>
+      <div class="site">donewithmyex.com</div>
+    </div>
+
+    <div class="tape"></div>
+  </div>
+</body>
+</html>

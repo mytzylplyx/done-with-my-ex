@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DoneWithMyEx — After Hours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --base:oklch(0.17 0.028 45);
+    --base-2:oklch(0.21 0.034 42);
+    --ember:oklch(0.26 0.055 35);
+    --line:oklch(0.34 0.045 45);
+    --line-soft:oklch(0.30 0.038 45);
+    --amber:oklch(0.78 0.185 62);
+    --amber-hot:oklch(0.72 0.205 45);
+    --lime:oklch(0.87 0.20 128);
+    --steel:oklch(0.86 0.02 220);
+    --ink:oklch(0.93 0.02 70);
+    --ink-dim:oklch(0.72 0.03 60);
+    --ink-faint:oklch(0.56 0.03 55);
+    --paper:oklch(0.94 0.012 75);
+    --paper-2:oklch(0.90 0.014 75);
+    --paper-line:oklch(0.82 0.02 70);
+    --paper-ink:oklch(0.26 0.03 55);
+    --paper-dim:oklch(0.46 0.028 55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{margin:0;background:oklch(0.12 0.02 40);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .art{width:800px;margin:0 auto;background:var(--base);color:var(--ink);position:relative;overflow:hidden}
+  .art::before{content:"";position:absolute;inset:0;background:
+     repeating-linear-gradient(0deg, transparent 0 3px, oklch(0.11 0.02 40 / .35) 3px 4px);
+     pointer-events:none;z-index:5;mix-blend-mode:multiply;opacity:.5}
+  .glow-amber{color:var(--amber);text-shadow:0 0 14px oklch(0.72 0.2 55 / .55),0 0 3px oklch(0.78 0.19 60 / .8)}
+  .glow-lime{color:var(--lime);text-shadow:0 0 14px oklch(0.85 0.2 128 / .5),0 0 3px oklch(0.87 0.2 128 / .7)}
+
+  /* TOP BAR */
+  .bar{display:flex;align-items:center;justify-content:space-between;padding:18px 30px;border-bottom:1px solid var(--line);background:var(--base-2);position:relative;z-index:6}
+  .mark{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;letter-spacing:.06em;line-height:1}
+  .mark b{color:var(--amber)}
+  .nav{display:flex;gap:22px;font-size:12.5px;letter-spacing:.05em;color:var(--ink-dim);text-transform:uppercase;font-weight:600}
+  .nav span:first-child{color:var(--ink)}
+  .cta{font-family:'Inter';font-weight:700;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:oklch(0.16 0.04 45);
+     background:var(--amber);padding:10px 16px;border-radius:6px;box-shadow:0 0 18px oklch(0.72 0.2 55 / .45);border:1px solid oklch(0.85 0.16 60)}
+
+  /* HERO */
+  .hero{padding:34px 30px 26px;position:relative;z-index:6;
+     background:radial-gradient(120% 90% at 78% 0%, var(--ember), var(--base) 62%)}
+  .eyebrow{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11.5px;letter-spacing:.32em;color:var(--amber-hot);text-transform:uppercase}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:none}
+  .release{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:62px;line-height:.92;letter-spacing:-.02em;margin:12px 0 8px}
+  .subhead{font-size:14.5px;color:var(--ink-dim);max-width:560px;line-height:1.45;font-style:italic}
+  .subhead b{color:var(--steel);font-style:normal;font-weight:600}
+
+  /* COUNTDOWN */
+  .clock{display:flex;gap:9px;margin:26px 0 22px}
+  .cell{flex:1;background:var(--base-2);border:1px solid var(--line-soft);border-radius:9px;padding:14px 6px 11px;text-align:center;position:relative;overflow:hidden}
+  .cell::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:oklch(0.11 0.02 40 / .7)}
+  .cell .num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:44px;line-height:1;position:relative;z-index:2}
+  .cell .lab{margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--ink-faint);text-transform:uppercase}
+
+  /* METER */
+  .meter-wrap{margin-top:4px}
+  .meter-head{display:flex;justify-content:space-between;align-items:baseline;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;margin-bottom:9px}
+  .meter-head .served{color:var(--ink-dim)}
+  .meter-head .pct{font-family:'Bricolage Grotesque';font-weight:800;font-size:19px;letter-spacing:0}
+  .meter-head .togo{color:var(--ink-dim)}
+  .track{height:16px;border-radius:8px;background:var(--base-2);border:1px solid var(--line-soft);padding:3px;position:relative}
+  .fill{height:100%;width:31.6%;border-radius:5px;background:
+     repeating-linear-gradient(90deg, var(--amber-hot) 0 9px, var(--amber) 9px 12px);
+     box-shadow:0 0 16px oklch(0.72 0.2 55 / .65),inset 0 0 4px oklch(0.97 0.05 80 / .35);position:relative}
+  .fill::after{content:"";position:absolute;right:-1px;top:-4px;bottom:-4px;width:3px;background:var(--lime);border-radius:2px;box-shadow:0 0 10px var(--lime)}
+
+  /* HUMOR ROW */
+  .humor{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;padding:22px 30px 6px;position:relative;z-index:6}
+  .chip{background:var(--base-2);border:1px solid var(--line-soft);border-radius:11px;padding:15px 15px 14px;position:relative;overflow:hidden}
+  .chip::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent 80%);opacity:.7}
+  .chip .big{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:1;letter-spacing:-.01em}
+  .chip .unit{margin-top:7px;font-weight:700;font-size:13px;color:var(--ink);letter-spacing:.01em}
+  .chip .sub{margin-top:6px;font-size:11.5px;line-height:1.4;color:var(--ink-faint)}
+
+  /* LEDGER */
+  .rec{margin:22px 30px 0;background:var(--paper);color:var(--paper-ink);border-radius:12px;overflow:hidden;position:relative;z-index:6;border:1px solid var(--paper-line)}
+  .rec-head{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--paper-line);background:var(--paper-2)}
+  .rec-title{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-dim)}
+  .rec-strip{display:flex}
+  .rec-strip .s{flex:1;padding:12px 18px;border-right:1px solid var(--paper-line)}
+  .rec-strip .s:last-child{border-right:none}
+  .rec-strip .k{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper-dim);font-weight:600}
+  .rec-strip .v{font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;margin-top:3px}
+  .rec-strip .v.paid{color:oklch(0.42 0.13 145)}
+  .rec-strip .v.left{color:oklch(0.5 0.16 40)}
+  .rows{padding:4px 18px 8px}
+  .row{display:grid;grid-template-columns:78px 1fr auto 128px;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--paper-line);font-size:13px}
+  .row:last-child{border-bottom:none}
+  .row .mo{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--paper-dim);font-size:12px}
+  .row .ty{font-weight:600;color:var(--paper-ink)}
+  .row .amt{font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;text-align:right}
+  .tag{justify-self:end;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:5px}
+  .tag.ok{background:oklch(0.88 0.09 145);color:oklch(0.34 0.1 145)}
+  .tag.pend{background:oklch(0.9 0.07 70);color:oklch(0.42 0.11 55)}
+  .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+  /* FOOTER */
+  .foot{display:flex;align-items:center;justify-content:space-between;padding:16px 30px 20px;margin-top:20px;border-top:1px solid var(--line);position:relative;z-index:6}
+  .foot .disc{font-size:11.5px;color:var(--ink-faint);letter-spacing:.02em}
+  .foot .dom{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;color:var(--amber-hot)}
+</style>
+</head>
+<body>
+<div class="art">
+
+  <div class="bar">
+    <div class="mark">DONE <b>WITH</b> MY EX</div>
+    <div class="nav"><span>Dashboard</span><span>Countdown</span><span>Logger</span><span>Vault</span></div>
+    <div class="cta">Log a payment</div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Your last payment lands</div>
+    <div class="release glow-amber">June 21, 2028</div>
+    <div class="subhead"><b>It's 3:04 a.m. and you're doing the math again.</b> Fine. Here's the math. That's the night the checks stop and your money is finally, legally, yours.</div>
+
+    <div class="clock">
+      <div class="cell"><div class="num glow-amber">1</div><div class="lab">Year</div></div>
+      <div class="cell"><div class="num glow-amber">11</div><div class="lab">Months</div></div>
+      <div class="cell"><div class="num glow-amber">21</div><div class="lab">Days</div></div>
+      <div class="cell"><div class="num">20</div><div class="lab">Hours</div></div>
+      <div class="cell"><div class="num">04</div><div class="lab">Mins</div></div>
+    </div>
+
+    <div class="meter-wrap">
+      <div class="meter-head">
+        <span class="served">334 served</span>
+        <span class="pct glow-lime">31.6%</span>
+        <span class="togo">722 to go</span>
+      </div>
+      <div class="track"><div class="fill"></div></div>
+    </div>
+  </div>
+
+  <div class="humor">
+    <div class="chip">
+      <div class="big glow-amber">129,391</div>
+      <div class="unit">Stairways to Heaven</div>
+      <div class="sub">8m 02s back-to-back. Robert Plant would be exhausted. So are you.</div>
+    </div>
+    <div class="chip">
+      <div class="big glow-amber">103</div>
+      <div class="unit">Taco Tuesdays</div>
+      <div class="sub">One a week. The only standing weekly commitment that still shows up.</div>
+    </div>
+    <div class="chip">
+      <div class="big glow-amber">31,183,344</div>
+      <div class="unit">Tinder Left-Swipes</div>
+      <div class="sub">One every 2 sec. Statistically, better odds than the marriage.</div>
+    </div>
+  </div>
+
+  <div class="rec">
+    <div class="rec-head">
+      <div class="rec-title">On record</div>
+      <div class="rec-title" style="letter-spacing:.06em">Organized records for negotiation, disputes &amp; peace of mind</div>
+    </div>
+    <div class="rec-strip">
+      <div class="s"><div class="k">Paid so far</div><div class="v paid">$24,000</div></div>
+      <div class="s"><div class="k">Left to pay</div><div class="v left">$60,000</div></div>
+      <div class="s"><div class="k">Per day on parole</div><div class="v">$78.90</div></div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <span class="mo">May 2026</span>
+        <span class="ty">Spousal support</span>
+        <span class="amt">$2,400</span>
+        <span class="tag ok"><span class="dot"></span>Receipt attached</span>
+      </div>
+      <div class="row">
+        <span class="mo">Mar 2026</span>
+        <span class="ty">Child support</span>
+        <span class="amt">$800</span>
+        <span class="tag ok"><span class="dot"></span>Receipt attached</span>
+      </div>
+      <div class="row">
+        <span class="mo">Jan 2026</span>
+        <span class="ty">Spousal support</span>
+        <span class="amt">$2,400</span>
+        <span class="tag pend"><span class="dot"></span>Receipt pending</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="disc">Not legal, financial, or tax advice.</div>
+    <div class="dom">donewithmyex.com</div>
+  </div>
+
+</div>
+</body>
+</html>

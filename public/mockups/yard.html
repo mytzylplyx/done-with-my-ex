@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoneWithMyEx — The Yard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper: oklch(95.5% 0.012 85);
+    --paper-2: oklch(92.5% 0.016 84);
+    --manila: oklch(88% 0.045 82);
+    --concrete: oklch(83% 0.012 80);
+    --line: oklch(76% 0.018 78);
+    --ink: oklch(23% 0.014 65);
+    --ink-soft: oklch(38% 0.014 70);
+    --ink-faint: oklch(52% 0.012 72);
+    --orange: oklch(66% 0.205 44);
+    --orange-deep: oklch(54% 0.19 42);
+    --orange-tint: oklch(90% 0.06 62);
+    --stamp: oklch(48% 0.11 250);
+    --stamp-tint: oklch(90% 0.035 250);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: oklch(70% 0.01 80);
+    font-family:"Archivo", system-ui, sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .board{
+    width:800px;
+    margin:0 auto;
+    background:
+      linear-gradient(oklch(0% 0 0 / 0.028) 1px, transparent 1px) 0 0 / 100% 28px,
+      var(--paper);
+    background-blend-mode:multiply;
+    color:var(--ink);
+    position:relative;
+    overflow:hidden;
+  }
+  .board::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      repeating-linear-gradient(-45deg,
+        var(--orange) 0 22px, var(--ink) 22px 44px);
+    height:8px; top:0; left:0; right:0;
+    opacity:0.9;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    display:flex; align-items:center; gap:16px;
+    padding:20px 34px 16px;
+    border-bottom:2px solid var(--ink);
+  }
+  .wordmark{
+    font-family:"Oswald", sans-serif;
+    font-weight:700;
+    font-size:23px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    line-height:0.98;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .wordmark .with{ color:var(--orange-deep); }
+  .nav{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.02em;
+    color:var(--ink-faint);
+    display:flex; gap:8px; align-items:center;
+    margin-left:6px;
+  }
+  .nav b{ color:var(--ink); font-weight:600; }
+  .nav .sep{ color:var(--line); }
+  .spacer{ flex:1; }
+  .btn-log{
+    font-family:"Oswald", sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:var(--orange);
+    border:2px solid var(--ink);
+    padding:9px 16px;
+    cursor:pointer;
+    box-shadow:3px 3px 0 var(--ink);
+    white-space:nowrap;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:26px 34px 30px;
+    border-bottom:2px solid var(--ink);
+    position:relative;
+  }
+  .intake-tag{
+    position:absolute; top:22px; right:34px;
+    border:1.5px solid var(--ink);
+    font-family:"Spline Sans Mono", monospace;
+    font-size:10px; letter-spacing:0.05em;
+    color:var(--ink-soft);
+    padding:5px 9px; line-height:1.3;
+    background:var(--paper-2);
+    text-align:right;
+  }
+  .intake-tag b{ color:var(--ink); font-weight:600; }
+  .eyebrow{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:11px; font-weight:600;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--orange-deep);
+    margin:0 0 8px;
+  }
+  .release{
+    font-family:"Oswald", sans-serif;
+    font-weight:700;
+    font-size:60px;
+    line-height:0.9;
+    letter-spacing:0.005em;
+    text-transform:uppercase;
+    margin:0;
+    color:var(--ink);
+  }
+  .release .stamp{
+    display:inline-block;
+    color:var(--orange-deep);
+  }
+  .subline{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:11.5px;
+    color:var(--ink-faint);
+    letter-spacing:0.02em;
+    margin:9px 0 22px;
+  }
+
+  .clock{
+    display:flex;
+    gap:0;
+    border:2px solid var(--ink);
+    background:var(--paper-2);
+    margin-bottom:22px;
+  }
+  .cell{
+    flex:1;
+    padding:12px 8px 10px;
+    text-align:center;
+    border-right:1.5px solid var(--line);
+    position:relative;
+  }
+  .cell:last-child{ border-right:0; }
+  .cell .num{
+    font-family:"Oswald", sans-serif;
+    font-weight:700;
+    font-size:38px;
+    line-height:1;
+    color:var(--ink);
+    letter-spacing:0.01em;
+  }
+  .cell.lead .num{ color:var(--orange-deep); }
+  .cell .lab{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:9.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-top:6px;
+  }
+
+  /* sentence progress ruler */
+  .ruler-wrap{ margin-top:4px; }
+  .ruler-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:"Spline Sans Mono", monospace;
+    font-size:11px; letter-spacing:0.04em;
+    color:var(--ink-soft);
+    margin-bottom:7px;
+  }
+  .ruler-head .served b{ color:var(--ink); font-weight:600; }
+  .ruler-head .pct{
+    font-family:"Oswald", sans-serif;
+    font-weight:700; font-size:17px;
+    color:var(--orange-deep);
+    letter-spacing:0.02em;
+  }
+  .ruler-head .togo{ color:var(--ink-faint); }
+  .ruler{
+    height:22px;
+    border:2px solid var(--ink);
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0 39.9px,
+        var(--line) 39.9px 40px);
+    position:relative;
+  }
+  .ruler .fill{
+    position:absolute; top:0; left:0; bottom:0;
+    width:31.6%;
+    background:
+      repeating-linear-gradient(-45deg,
+        var(--orange) 0 7px, var(--orange-deep) 7px 14px);
+    border-right:2px solid var(--ink);
+  }
+
+  /* ---------- HUMOR ROW ---------- */
+  .humor{
+    padding:22px 34px 24px;
+    border-bottom:2px solid var(--ink);
+  }
+  .humor-head{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:10.5px; letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 14px;
+  }
+  .chips{ display:flex; gap:0; border:2px solid var(--ink); background:var(--paper-2); }
+  .chip{
+    flex:1;
+    padding:14px 16px;
+    border-right:1.5px solid var(--line);
+  }
+  .chip:last-child{ border-right:0; }
+  .chip .big{
+    font-family:"Oswald", sans-serif;
+    font-weight:700;
+    font-size:29px;
+    line-height:1;
+    color:var(--ink);
+    letter-spacing:0.005em;
+  }
+  .chip .lab{
+    font-family:"Archivo", sans-serif;
+    font-weight:600;
+    font-size:13px;
+    color:var(--orange-deep);
+    margin-top:6px;
+    letter-spacing:0.01em;
+  }
+  .chip .sub{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:10px;
+    color:var(--ink-faint);
+    margin-top:4px;
+    letter-spacing:0.01em;
+    line-height:1.35;
+  }
+
+  /* ---------- ON RECORD (ledger) ---------- */
+  .record{
+    padding:22px 34px 24px;
+    background:var(--paper-2);
+    border-bottom:2px solid var(--ink);
+  }
+  .record-head{
+    display:flex; align-items:baseline; gap:10px;
+    margin:0 0 14px;
+  }
+  .record-head h3{
+    font-family:"Oswald", sans-serif;
+    font-weight:600; font-size:15px;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink); margin:0;
+  }
+  .record-head .case{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:10px; color:var(--ink-faint);
+    letter-spacing:0.03em;
+  }
+  .strip{
+    display:flex; gap:0;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    margin-bottom:14px;
+  }
+  .strip .s{
+    flex:1; padding:10px 14px;
+    border-right:1.5px solid var(--line);
+  }
+  .strip .s:last-child{ border-right:0; }
+  .strip .s .k{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:9.5px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--ink-faint);
+    margin-bottom:4px;
+  }
+  .strip .s .v{
+    font-family:"Spline Sans Mono", monospace;
+    font-weight:600; font-size:16px;
+    color:var(--ink); letter-spacing:0.01em;
+  }
+  .strip .s.accent .v{ color:var(--orange-deep); }
+
+  table.ledger{
+    width:100%; border-collapse:collapse;
+    font-family:"Spline Sans Mono", monospace;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+  }
+  table.ledger th{
+    text-align:left;
+    font-size:9.5px; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-faint);
+    padding:8px 14px;
+    border-bottom:1.5px solid var(--line);
+  }
+  table.ledger th.r, table.ledger td.r{ text-align:right; }
+  table.ledger td{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    padding:11px 14px;
+    border-bottom:1px solid var(--line);
+    vertical-align:middle;
+  }
+  table.ledger tr:last-child td{ border-bottom:0; }
+  table.ledger td.date{ color:var(--ink); font-weight:500; }
+  table.ledger td.amt{ color:var(--ink); font-weight:600; font-size:13px; }
+  .rcpt{
+    display:inline-block;
+    font-size:9.5px; letter-spacing:0.04em;
+    padding:3px 7px;
+    border:1.2px solid var(--stamp);
+    color:var(--stamp);
+    background:var(--stamp-tint);
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .rcpt.pending{
+    border-color:var(--ink-faint);
+    color:var(--ink-faint);
+    background:transparent;
+    border-style:dashed;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .foot{
+    padding:16px 34px 20px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .foot .disc{
+    font-family:"Spline Sans Mono", monospace;
+    font-size:10.5px;
+    color:var(--ink-faint);
+    letter-spacing:0.03em;
+  }
+  .foot .disc b{
+    color:var(--ink-soft); font-weight:600;
+  }
+  .foot .dot{ color:var(--line); }
+  .foot .site{
+    margin-left:auto;
+    font-family:"Oswald", sans-serif;
+    font-weight:600; font-size:12px;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink);
+  }
+</style>
+</head>
+<body>
+  <main class="board" role="main" aria-label="DoneWithMyEx — release date countdown">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="wordmark">DONE&nbsp;<span class="with">WITH</span>&nbsp;MY&nbsp;EX</div>
+      <nav class="nav" aria-label="Sections">
+        <b>Dashboard</b><span class="sep">·</span>Countdown<span class="sep">·</span>Logger<span class="sep">·</span>Vault
+      </nav>
+      <span class="spacer"></span>
+      <button class="btn-log" type="button">Log a payment</button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Freedom countdown">
+      <div class="intake-tag">
+        INMATE&nbsp;NO.&nbsp;<b>DWX-0417</b><br />
+        SENTENCE: SPOUSAL SUPPORT
+      </div>
+      <p class="eyebrow">Your last payment lands</p>
+      <h1 class="release"><span class="stamp">June&nbsp;21,&nbsp;2028</span></h1>
+      <p class="subline">// PROJECTED RELEASE DATE &nbsp;—&nbsp; earliest date you stop cutting the check. Good behavior not required.</p>
+
+      <div class="clock" role="group" aria-label="Time remaining">
+        <div class="cell lead"><div class="num">1</div><div class="lab">Year</div></div>
+        <div class="cell"><div class="num">11</div><div class="lab">Months</div></div>
+        <div class="cell"><div class="num">21</div><div class="lab">Days</div></div>
+        <div class="cell"><div class="num">20</div><div class="lab">Hours</div></div>
+        <div class="cell"><div class="num">04</div><div class="lab">Mins</div></div>
+      </div>
+
+      <div class="ruler-wrap">
+        <div class="ruler-head">
+          <div class="served"><b>334</b> served</div>
+          <div class="pct">31.6%</div>
+          <div class="togo">722 to go</div>
+        </div>
+        <div class="ruler" aria-label="Sentence progress, 31.6 percent"><div class="fill"></div></div>
+      </div>
+    </section>
+
+    <!-- HUMOR ROW -->
+    <section class="humor" aria-label="Time served, in other units">
+      <p class="humor-head">// Yard time, converted — 722 days is really…</p>
+      <div class="chips">
+        <div class="chip">
+          <div class="big">129,391</div>
+          <div class="lab">Stairways to Heaven</div>
+          <div class="sub">8m 02s each, back-to-back, no parole</div>
+        </div>
+        <div class="chip">
+          <div class="big">103</div>
+          <div class="lab">Taco Tuesdays</div>
+          <div class="sub">one a week, alone, table for one</div>
+        </div>
+        <div class="chip">
+          <div class="big">31,183,344</div>
+          <div class="lab">Tinder Left-Swipes</div>
+          <div class="sub">one every 2 sec — still hasn't matched</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ON RECORD -->
+    <section class="record" aria-label="Payment records">
+      <div class="record-head">
+        <h3>On record</h3>
+        <span class="case">// CASE FILE — property receipts, logged &amp; timestamped</span>
+      </div>
+
+      <div class="strip">
+        <div class="s"><div class="k">Paid so far</div><div class="v">$24,000</div></div>
+        <div class="s"><div class="k">Left to pay</div><div class="v">$60,000</div></div>
+        <div class="s accent"><div class="k">Per day on parole</div><div class="v">$78.90</div></div>
+      </div>
+
+      <table class="ledger">
+        <thead>
+          <tr>
+            <th style="width:16%">Month</th>
+            <th style="width:34%">Line item</th>
+            <th class="r" style="width:18%">Amount</th>
+            <th class="r" style="width:32%">Receipt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="date">May 2026</td>
+            <td>Spousal support</td>
+            <td class="r amt">$2,400</td>
+            <td class="r"><span class="rcpt">Receipt attached</span></td>
+          </tr>
+          <tr>
+            <td class="date">Mar 2026</td>
+            <td>Child support</td>
+            <td class="r amt">$800</td>
+            <td class="r"><span class="rcpt">Receipt attached</span></td>
+          </tr>
+          <tr>
+            <td class="date">Jan 2026</td>
+            <td>Spousal support</td>
+            <td class="r amt">$2,400</td>
+            <td class="r"><span class="rcpt pending">Receipt pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="foot">
+      <span class="disc"><b>Not legal, financial, or tax advice.</b> &nbsp;Organized records for negotiation, disputes &amp; peace of mind.</span>
+      <span class="site">donewithmyex.com</span>
+    </footer>
+
+  </main>
+</body>
+</html>

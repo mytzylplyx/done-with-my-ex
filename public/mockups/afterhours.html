@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DoneWithMyEx — After Hours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Space+Grotesk:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum-950: oklch(0.16 0.055 350);
+    --plum-900: oklch(0.20 0.062 350);
+    --plum-800: oklch(0.29 0.070 352);
+    --ink:      oklch(0.14 0.045 348);
+    --paper:    oklch(0.94 0.018 60);
+    --paper-dim:oklch(0.78 0.028 40);
+    --paper-faint:oklch(0.63 0.035 30);
+    --coral:    oklch(0.71 0.20 18);
+    --coral-hot:oklch(0.75 0.215 12);
+    --magenta:  oklch(0.68 0.24 358);
+    --lime:     oklch(0.90 0.20 130);
+    --line:     oklch(0.40 0.055 352);
+    --line-soft:oklch(0.34 0.05 352);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background: oklch(0.11 0.03 348);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .board{
+    width:800px;margin:0 auto;
+    background:
+      radial-gradient(120% 80% at 18% -8%, oklch(0.28 0.10 12 / 0.55), transparent 60%),
+      radial-gradient(120% 90% at 108% 6%, oklch(0.24 0.11 335 / 0.50), transparent 55%),
+      linear-gradient(178deg, var(--plum-900) 0%, var(--plum-950) 55%, var(--ink) 100%);
+    color:var(--paper);
+    position:relative;overflow:hidden;
+  }
+  .disp{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;line-height:0.9;letter-spacing:-0.01em}
+
+  .top{
+    display:flex;align-items:center;gap:18px;
+    padding:20px 34px;
+    border-bottom:1px solid var(--line-soft);
+    position:relative;
+  }
+  .mark{display:flex;align-items:baseline;gap:9px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:0.01em}
+  .mark .a{font-size:19px;color:var(--paper)}
+  .mark .b{font-size:19px;color:var(--coral-hot);text-shadow:0 0 16px oklch(0.72 0.2 14 / 0.55)}
+  .mark .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);align-self:center;box-shadow:0 0 12px var(--lime)}
+  .nav{margin-left:6px;display:flex;gap:2px;font-size:12.5px;color:var(--paper-faint);font-weight:500}
+  .nav b{color:var(--paper);font-weight:700}
+  .nav span{opacity:0.4;padding:0 3px}
+  .spacer{flex:1}
+  .btn{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.01em;
+    color:var(--ink);background:var(--lime);
+    border:none;border-radius:11px;padding:11px 17px;cursor:pointer;
+    box-shadow:0 0 0 1px oklch(0.9 0.2 130 / 0.6), 0 6px 22px oklch(0.85 0.2 132 / 0.28);
+    display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+  }
+  .btn::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink);opacity:0.55}
+
+  .hero{padding:30px 34px 26px;position:relative}
+  .eyebrow{
+    font-size:11.5px;letter-spacing:0.28em;font-weight:700;
+    color:var(--coral-hot);text-transform:uppercase;margin:0 0 10px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+  .release{font-size:56px;margin:0 0 4px;color:var(--paper);letter-spacing:-0.02em}
+  .release em{font-style:normal;color:var(--lime);text-shadow:0 0 26px oklch(0.88 0.2 131 / 0.35)}
+  .subline{font-size:13.5px;color:var(--paper-dim);margin:0 0 20px;font-weight:400}
+  .subline b{color:var(--coral);font-weight:500}
+
+  .clock{display:flex;gap:9px;margin:0 0 20px}
+  .cell{
+    flex:1;position:relative;
+    background:linear-gradient(180deg, var(--plum-800), var(--plum-950));
+    border:1px solid var(--line);border-radius:13px;
+    padding:15px 8px 11px;text-align:center;
+    box-shadow: inset 0 1px 0 oklch(0.5 0.06 352 / 0.4), inset 0 -14px 24px oklch(0.1 0.03 348 / 0.7);
+    overflow:hidden;
+  }
+  .cell::before{content:"";position:absolute;left:8px;right:8px;top:50%;height:1px;background:oklch(0.08 0.02 348 / 0.85);z-index:2}
+  .cell::after{content:"";position:absolute;inset:0;border-radius:13px;box-shadow:inset 0 0 0 1px oklch(0.6 0.12 12 / 0.12)}
+  .cell.pulse{border-color:var(--coral)}
+  .cell.pulse .num{color:var(--coral-hot);text-shadow:0 0 20px oklch(0.72 0.2 14 / 0.5)}
+  .num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;line-height:1;color:var(--paper);letter-spacing:-0.02em;position:relative;z-index:1}
+  .unit{font-size:10px;letter-spacing:0.18em;font-weight:700;color:var(--paper-faint);text-transform:uppercase;margin-top:8px}
+
+  .meter-head{display:flex;justify-content:space-between;align-items:flex-end;margin:0 0 9px}
+  .served{font-size:13px;color:var(--paper-dim);font-weight:500}
+  .served b{color:var(--paper);font-weight:700}
+  .pct{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;color:var(--lime);text-shadow:0 0 18px oklch(0.88 0.2 131 / 0.3)}
+  .togo{font-size:13px;color:var(--paper-dim);font-weight:500}
+  .togo b{color:var(--coral);font-weight:700}
+  .meter{
+    height:15px;border-radius:9px;
+    background:oklch(0.16 0.04 350);
+    border:1px solid var(--line);
+    position:relative;overflow:hidden;
+  }
+  .fill{
+    position:absolute;left:0;top:0;bottom:0;width:31.6%;
+    background:linear-gradient(90deg, var(--coral) 0%, var(--magenta) 70%, var(--coral-hot) 100%);
+    box-shadow:0 0 16px oklch(0.7 0.22 4 / 0.6);
+    border-radius:9px;
+  }
+  .fill::after{
+    content:"";position:absolute;right:0;top:-3px;bottom:-3px;width:3px;
+    background:var(--lime);box-shadow:0 0 12px var(--lime);border-radius:3px;
+  }
+  .ticks{position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent 0,transparent 39px,oklch(0.4 0.05 352 / 0.5) 39px,oklch(0.4 0.05 352 / 0.5) 40px)}
+
+  .sect-lbl{
+    font-size:11px;letter-spacing:0.26em;font-weight:700;color:var(--paper-faint);
+    text-transform:uppercase;margin:0 34px 12px;display:flex;align-items:center;gap:10px;
+  }
+  .sect-lbl::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+  .chips{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;padding:0 34px 6px}
+  .chip{
+    background:oklch(0.19 0.055 350 / 0.7);
+    border:1px solid var(--line-soft);border-radius:14px;
+    padding:16px 15px 14px;position:relative;overflow:hidden;
+  }
+  .chip .big{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:29px;line-height:1;letter-spacing:-0.02em;margin-bottom:8px}
+  .chip.c1 .big{color:var(--coral-hot);text-shadow:0 0 18px oklch(0.72 0.2 14 / 0.4)}
+  .chip.c2 .big{color:var(--lime);text-shadow:0 0 18px oklch(0.88 0.2 131 / 0.35)}
+  .chip.c3 .big{color:var(--magenta);text-shadow:0 0 18px oklch(0.68 0.24 358 / 0.4)}
+  .chip .lab{font-size:13.5px;font-weight:700;color:var(--paper);margin-bottom:3px;letter-spacing:-0.01em}
+  .chip .sub{font-size:11.5px;color:var(--paper-faint);line-height:1.4}
+  .chip .glow{position:absolute;bottom:-30px;right:-20px;width:80px;height:80px;border-radius:50%;filter:blur(26px);opacity:0.35}
+  .chip.c1 .glow{background:var(--coral)}
+  .chip.c2 .glow{background:var(--lime)}
+  .chip.c3 .glow{background:var(--magenta)}
+
+  .ledger-wrap{margin:24px 34px 0;padding:20px 22px 22px;background:oklch(0.96 0.014 70);border-radius:16px;color:var(--ink);box-shadow:0 0 0 1px oklch(0.4 0.06 352 / 0.5), 0 -1px 0 oklch(0.9 0.2 130 / 0.25) inset}
+  .ledger-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+  .ledger-top .h{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15px;color:var(--ink);letter-spacing:0.01em;text-transform:uppercase}
+  .strip{display:flex;gap:22px}
+  .stat .k{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:oklch(0.5 0.03 40);font-weight:700;margin-bottom:2px}
+  .stat .v{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;color:var(--ink)}
+  .stat .v.pos{color:oklch(0.45 0.13 150)}
+  .stat .v.neg{color:oklch(0.5 0.16 25)}
+  .rows{border-top:1px solid oklch(0.85 0.02 60)}
+  .row{display:grid;grid-template-columns:78px 1fr auto 118px;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid oklch(0.89 0.015 60);font-size:13.5px}
+  .row:last-child{border-bottom:none;padding-bottom:2px}
+  .row .date{font-family:'DM Mono',monospace;color:oklch(0.45 0.03 40);font-size:12.5px}
+  .row .type{color:var(--ink);font-weight:500}
+  .row .amt{font-family:'DM Mono',monospace;font-weight:500;color:var(--ink);text-align:right}
+  .tag{font-size:11px;font-weight:700;justify-self:end;padding:4px 10px;border-radius:20px;letter-spacing:0.01em;display:inline-flex;align-items:center;gap:6px}
+  .tag::before{content:"";width:6px;height:6px;border-radius:50%}
+  .tag.ok{background:oklch(0.92 0.07 150);color:oklch(0.38 0.11 150)}
+  .tag.ok::before{background:oklch(0.55 0.15 150)}
+  .tag.pend{background:oklch(0.93 0.06 60);color:oklch(0.48 0.12 55)}
+  .tag.pend::before{background:oklch(0.7 0.15 60)}
+
+  .foot{
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    padding:20px 34px 24px;margin-top:24px;
+    border-top:1px solid var(--line-soft);
+  }
+  .disclaim{font-size:12px;color:var(--paper-faint);font-weight:400}
+  .disclaim b{color:var(--paper-dim);font-weight:500}
+  .dom{font-family:'DM Mono',monospace;font-size:12px;color:var(--coral);letter-spacing:0.02em}
+</style>
+</head>
+<body>
+<div class="board">
+
+  <div class="top">
+    <div class="mark"><span class="a">DONE</span><span class="dot"></span><span class="b">WITH MY EX</span></div>
+    <nav class="nav"><b>Dashboard</b><span>·</span>Countdown<span>·</span>Logger<span>·</span>Vault</nav>
+    <div class="spacer"></div>
+    <button class="btn">Log a payment</button>
+  </div>
+
+  <div class="hero">
+    <p class="eyebrow">Your last payment lands</p>
+    <h1 class="release disp">June 21, <em>2028</em></h1>
+    <p class="subline">It's 3:04 a.m. and you're doing the math again. <b>Fine. Here's the math.</b></p>
+
+    <div class="clock">
+      <div class="cell"><div class="num">1</div><div class="unit">Year</div></div>
+      <div class="cell"><div class="num">11</div><div class="unit">Months</div></div>
+      <div class="cell"><div class="num">21</div><div class="unit">Days</div></div>
+      <div class="cell"><div class="num">20</div><div class="unit">Hours</div></div>
+      <div class="cell pulse"><div class="num">04</div><div class="unit">Mins</div></div>
+    </div>
+
+    <div class="meter-head">
+      <div class="served"><b>334</b> served</div>
+      <div class="pct disp">31.6%</div>
+      <div class="togo"><b>722</b> to go</div>
+    </div>
+    <div class="meter">
+      <div class="ticks"></div>
+      <div class="fill"></div>
+    </div>
+  </div>
+
+  <div class="sect-lbl">How long is that, really</div>
+  <div class="chips">
+    <div class="chip c1">
+      <div class="glow"></div>
+      <div class="big disp">129,391</div>
+      <div class="lab">Stairways to Heaven</div>
+      <div class="sub">8m 02s, back-to-back. Zeppelin outlasts your settlement.</div>
+    </div>
+    <div class="chip c2">
+      <div class="glow"></div>
+      <div class="big disp">103</div>
+      <div class="lab">Taco Tuesdays</div>
+      <div class="sub">One a week. That's a lot of tacos to cry into.</div>
+    </div>
+    <div class="chip c3">
+      <div class="glow"></div>
+      <div class="big disp">31,183,344</div>
+      <div class="lab">Tinder Left-Swipes</div>
+      <div class="sub">One every 2 sec. Never say you didn't try.</div>
+    </div>
+  </div>
+
+  <div class="ledger-wrap">
+    <div class="ledger-top">
+      <div class="h">On record</div>
+      <div class="strip">
+        <div class="stat"><div class="k">Paid so far</div><div class="v pos">$24,000</div></div>
+        <div class="stat"><div class="k">Left to pay</div><div class="v neg">$60,000</div></div>
+        <div class="stat"><div class="k">Per day on parole</div><div class="v">$78.90</div></div>
+      </div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="date">May 2026</div>
+        <div class="type">Spousal support</div>
+        <div class="amt">$2,400</div>
+        <div class="tag ok">Receipt attached</div>
+      </div>
+      <div class="row">
+        <div class="date">Mar 2026</div>
+        <div class="type">Child support</div>
+        <div class="amt">$800</div>
+        <div class="tag ok">Receipt attached</div>
+      </div>
+      <div class="row">
+        <div class="date">Jan 2026</div>
+        <div class="type">Spousal support</div>
+        <div class="amt">$2,400</div>
+        <div class="tag pend">Receipt pending</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="disclaim"><b>Not legal, financial, or tax advice.</b> Organized records for negotiation, disputes &amp; peace of mind.</div>
+    <div class="dom">donewithmyex.com</div>
+  </div>
+
+</div>
+</body>
+</html>
