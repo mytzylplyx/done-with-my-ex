@@ -1,15 +1,14 @@
-import { C, goldText, goldButton, fontDisplay, fontBody, fontLabel, mut } from '@/lib/tokens'
+import { useTheme } from '@/lib/theme'
 import { FlipClock } from '@/components/FlipClock'
 import { useBreakpoint } from '@/lib/useBreakpoint'
 import type { FreedomVals } from '@/lib/freedom'
 
-const GOLD_BAR = 'linear-gradient(90deg,#FFE4AF,#FFC107)'
-
 function StatCard({ label, value, gold }: { label: string; value: string; gold?: boolean }) {
+  const t = useTheme()
   return (
-    <div style={{ padding: 18, borderRadius: 15, background: C.containerLow }}>
-      <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 8.5, letterSpacing: '.12em', textTransform: 'uppercase', color: mut(0.45), marginBottom: 9 }}>{label}</div>
-      <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 21, color: gold ? C.gold : C.on }}>{value}</div>
+    <div style={{ padding: 18, borderRadius: t.motif.chipRadius, background: t.C.containerLow, border: `1px solid ${t.C.hairline}` }}>
+      <div style={{ fontFamily: t.fontLabel, fontWeight: 600, fontSize: 8.5, letterSpacing: '.12em', textTransform: 'uppercase', color: t.mut(0.45), marginBottom: 9 }}>{label}</div>
+      <div style={{ fontFamily: t.fontDisplay, fontWeight: 700, fontSize: 21, color: gold ? t.C.gold : t.C.on }}>{value}</div>
     </div>
   )
 }
@@ -17,6 +16,7 @@ function StatCard({ label, value, gold }: { label: string; value: string; gold?:
 export function Cinematic({
   vals, onLog, onGoVault,
 }: { vals: FreedomVals; onLog: () => void; onGoVault: () => void }) {
+  const t = useTheme()
   const bp = useBreakpoint()
   const isMobile = bp === 'mobile'
   const stack = bp !== 'desktop'
@@ -24,21 +24,22 @@ export function Cinematic({
   return (
     <div>
       {/* hero */}
-      <div style={{ position: 'relative', overflow: 'hidden', padding: isMobile ? '32px 16px 30px' : '46px 32px 40px', background: 'radial-gradient(120% 130% at 50% -25%,#16234f 0%,#0a1330 55%,#070d22 100%)', borderBottom: '1px solid rgba(221,225,255,.06)', textAlign: 'center' }}>
-        <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 10, letterSpacing: '.24em', textTransform: 'uppercase', color: C.teal, marginBottom: 12 }}>Your last payment lands</div>
-        <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(28px,3.6vw,40px)', letterSpacing: '-.01em', ...goldText, marginBottom: 26 }}>{vals.endLabel}</div>
+      <div style={{ position: 'relative', overflow: 'hidden', padding: isMobile ? '32px 16px 30px' : '46px 32px 40px', background: t.decor.heroGrad, borderBottom: `1px solid ${t.C.hairline}`, textAlign: 'center' }}>
+        {t.motif.hazardRail && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 6, background: t.decor.hazardTape }} />}
+        <div style={{ fontFamily: t.fontLabel, fontWeight: 600, fontSize: 10, letterSpacing: '.24em', textTransform: 'uppercase', color: t.C.gold, marginBottom: 12 }}>Your last payment lands</div>
+        <div style={{ fontFamily: t.fontDisplay, fontWeight: 700, fontSize: 'clamp(28px,3.6vw,40px)', letterSpacing: '.01em', textTransform: 'uppercase', ...t.goldText, marginBottom: 26 }}>{vals.endLabel}</div>
 
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: 'clamp(8px,1.4vw,18px)', flexWrap: 'wrap' }}>
           <FlipClock vals={vals} size={isMobile ? 'md' : 'lg'} />
         </div>
 
         <div style={{ maxWidth: 720, margin: '30px auto 0' }}>
-          <div style={{ height: 6, borderRadius: 6, background: 'rgba(221,225,255,.09)', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: vals.pctWidth, background: GOLD_BAR, borderRadius: 6, boxShadow: '0 0 14px rgba(255,193,7,.5)' }} />
+          <div style={{ height: 6, borderRadius: 2, background: t.mut(0.09), overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: vals.pctWidth, background: t.GOLD, borderRadius: 2 }} />
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 9, fontFamily: fontLabel, fontWeight: 600, fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: mut(0.5) }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 9, fontFamily: t.fontLabel, fontWeight: 600, fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: t.mut(0.5) }}>
             <span>{vals.daysServed} served</span>
-            <span style={{ color: C.teal }}>{vals.pctText} complete</span>
+            <span style={{ color: t.C.gold }}>{vals.pctText} complete</span>
             <span>{vals.daysToGo} to go</span>
           </div>
         </div>
@@ -54,38 +55,42 @@ export function Cinematic({
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: stack ? 'minmax(0,1fr)' : 'minmax(0,1.5fr) minmax(0,1fr)', gap: 18, alignItems: 'start' }}>
-          <div style={{ borderRadius: 18, background: C.containerLow, padding: '20px 22px' }}>
+          <div style={{ borderRadius: t.motif.panelRadius, background: t.C.containerLow, border: `1px solid ${t.C.hairline}`, padding: '20px 22px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-              <span style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: mut(0.5) }}>On record</span>
-              <span style={{ fontFamily: fontBody, fontSize: 11, color: mut(0.4) }}>{vals.payCount}</span>
+              <span style={{ fontFamily: t.fontLabel, fontWeight: 600, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: t.mut(0.5) }}>On record</span>
+              <span style={{ fontFamily: t.fontLabel, fontSize: 11, letterSpacing: '.04em', color: t.mut(0.4) }}>{vals.payCount}</span>
             </div>
-            {vals.payments.map((u) => (
-              <div key={u.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '11px 2px', borderBottom: '1px solid rgba(221,225,255,.06)' }}>
-                <span style={{ width: 8, height: 8, borderRadius: 2, flexShrink: 0, background: u.dot }} />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 13, color: C.on }}>{u.type}</div>
-                  <div style={{ fontFamily: fontBody, fontSize: 10.5, color: u.recClr }}>{u.when} · {u.receiptText}</div>
+            {vals.payments.map((u) => {
+              const dot = u.isCS ? t.C.teal : t.C.gold
+              const recClr = u.receiptText.includes('attached') ? t.C.teal : t.mut(0.4)
+              return (
+                <div key={u.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '11px 2px', borderBottom: `1px solid ${t.mut(0.06)}` }}>
+                  <span style={{ width: 8, height: 8, borderRadius: 1, flexShrink: 0, background: dot }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: t.fontBody, fontWeight: 500, fontSize: 13, color: t.C.on }}>{u.type}</div>
+                    <div style={{ fontFamily: t.fontLabel, fontSize: 10.5, letterSpacing: '.02em', color: recClr }}>{u.when} · {u.receiptText}</div>
+                  </div>
+                  <span style={{ fontFamily: t.fontDisplay, fontWeight: 600, fontSize: 14, color: t.C.on }}>{u.amount}</span>
                 </div>
-                <span style={{ fontFamily: fontDisplay, fontWeight: 600, fontSize: 14, color: C.on }}>{u.amount}</span>
-              </div>
-            ))}
+              )
+            })}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '16px 18px', borderRadius: 16, background: C.containerLow }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '16px 18px', borderRadius: t.motif.chipRadius, background: t.C.containerLow, border: `1px solid ${t.C.hairline}` }}>
               <div>
-                <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 8.5, letterSpacing: '.13em', textTransform: 'uppercase', color: mut(0.45), marginBottom: 5 }}>Next payment</div>
-                <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 17, color: C.on }}>
-                  {vals.nextAmount} <span style={{ fontFamily: fontBody, fontWeight: 400, fontSize: 12, color: mut(0.5) }}>· {vals.nextPay}</span>
+                <div style={{ fontFamily: t.fontLabel, fontWeight: 600, fontSize: 8.5, letterSpacing: '.13em', textTransform: 'uppercase', color: t.mut(0.45), marginBottom: 5 }}>Next payment</div>
+                <div style={{ fontFamily: t.fontDisplay, fontWeight: 700, fontSize: 17, color: t.C.on }}>
+                  {vals.nextAmount} <span style={{ fontFamily: t.fontBody, fontWeight: 400, fontSize: 12, color: t.mut(0.5) }}>· {vals.nextPay}</span>
                 </div>
               </div>
-              <button onClick={onLog} style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 11, letterSpacing: '.05em', textTransform: 'uppercase', padding: '10px 15px', border: 'none', borderRadius: 9, cursor: 'pointer', ...goldButton }}>Log it</button>
+              <button onClick={onLog} style={{ fontFamily: t.fontLabel, fontWeight: 600, fontSize: 11, letterSpacing: '.06em', textTransform: 'uppercase', padding: '10px 15px', border: 'none', borderRadius: t.motif.pillRadius, cursor: 'pointer', ...t.goldButton }}>Log it</button>
             </div>
-            <div style={{ borderRadius: 16, padding: 18, background: 'linear-gradient(135deg,rgba(255,193,7,.1),rgba(255,193,7,.02))', border: '1px solid rgba(255,193,7,.16)' }}>
-              <div style={{ fontFamily: fontBody, fontSize: 12.5, lineHeight: 1.5, color: mut(0.65) }}>
-                You're <span style={{ color: C.gold, fontWeight: 600 }}>{vals.pctText}</span> of the way out. Keep the receipts — the proof is yours, not a memory.
+            <div style={{ borderRadius: t.motif.chipRadius, padding: 18, background: t.decor.accentSoftBg, border: `1px solid ${t.decor.accentSoftBorder}` }}>
+              <div style={{ fontFamily: t.fontBody, fontSize: 12.5, lineHeight: 1.5, color: t.mut(0.65) }}>
+                You&apos;re <span style={{ color: t.C.gold, fontWeight: 600 }}>{vals.pctText}</span> of the way out. Keep the receipts — the proof is yours, not a memory.
               </div>
-              <button onClick={onGoVault} style={{ marginTop: 13, fontFamily: fontLabel, fontWeight: 700, fontSize: 11, letterSpacing: '.05em', textTransform: 'uppercase', padding: '9px 15px', border: '1px solid rgba(221,225,255,.16)', borderRadius: 9, cursor: 'pointer', background: 'transparent', color: C.on }}>Open Proof Vault</button>
+              <button onClick={onGoVault} style={{ marginTop: 13, fontFamily: t.fontLabel, fontWeight: 600, fontSize: 11, letterSpacing: '.06em', textTransform: 'uppercase', padding: '9px 15px', border: `1px solid ${t.C.hairline}`, borderRadius: t.motif.pillRadius, cursor: 'pointer', background: 'transparent', color: t.C.on }}>Open Proof Vault</button>
             </div>
           </div>
         </div>

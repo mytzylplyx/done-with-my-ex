@@ -1,52 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Work+Sans:wght@600;700&display=swap');
 @import "tailwindcss";
 
 /* ============================================================
-   "Financial Insurgent" design tokens — surfaced as Tailwind
-   theme variables so future shadcn-style work shares one source
-   of truth. The Desktop screens themselves mirror the Claude
-   Design canvas (DoneWithMyEx Desktop.dc.html) faithfully and
-   read their colors/fonts from src/lib/tokens.ts.
+   Fonts load via next/font (see app/layout.tsx), exposed as CSS
+   variables. Colors are driven at runtime by the theme engine
+   (src/lib/theme) through inline styles + the <html> background,
+   so there are no hardcoded surface colors here.
    ============================================================ */
 @theme {
-  /* Surfaces — deep lacquered navy, never pure black */
-  --color-page: #07080d;
-  --color-surface: #051036;
-  --color-surface-darkest: #010A31;
-  --color-surface-container-low: #0E193E;
-  --color-surface-container: #131D43;
-  --color-surface-container-high: #1A244A;
-  --color-surface-container-highest: #293359;
-
-  /* Text / on-surface */
-  --color-on-surface: #DDE1FF;
-
-  /* Freedom Yellow (gold spotlight) */
-  --color-gold: #FFC107;
-  --color-gold-light: #FFE4AF;
-
-  /* Success Teal */
-  --color-teal: #97F7F6;
-  --color-teal-deep: #008080;
-
-  /* Type */
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-label: 'Work Sans', sans-serif;
+  --font-display: var(--font-oswald), 'Oswald', sans-serif;
+  --font-body: var(--font-inter), 'Inter', sans-serif;
+  --font-label: var(--font-plex-mono), 'IBM Plex Mono', monospace;
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
+html { background: #141210; }
 body {
-  background: #07080d;
-  font-family: 'Inter', sans-serif;
-  color: #DDE1FF;
+  font-family: var(--font-inter), 'Inter', sans-serif;
+  color: #e8e4d8;
+  background: transparent;
 }
 
-::selection { background: #FFC107; color: #051036; }
+/* Selection + scrollbar are tinted warm to match The Yard; harmless elsewhere. */
+::selection { background: #f26a1b; color: #141210; }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: rgba(221, 225, 255, .13); border-radius: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(232, 228, 216, .16); border-radius: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
 @keyframes dwmxFlip {

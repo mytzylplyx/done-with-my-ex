@@ -1,14 +1,15 @@
-import { fontLabel } from '@/lib/tokens'
+import { useTheme } from '@/lib/theme'
 
 export function Toast({ message }: { message: string }) {
+  const t = useTheme()
   if (!message) return null
   return (
     <div
       style={{
         display: 'flex', position: 'fixed', left: '50%', bottom: 28, transform: 'translateX(-50%)',
-        alignItems: 'center', background: 'rgba(8,16,44,.95)', border: '1px solid rgba(151,247,246,.3)',
-        color: '#97F7F6', fontFamily: fontLabel, fontWeight: 700, fontSize: 12, letterSpacing: '.05em',
-        padding: '12px 20px', borderRadius: 11, backdropFilter: 'blur(8px)', zIndex: 90,
+        alignItems: 'center', background: t.C.container, border: `1px solid ${t.decor.accentSoftBorder}`,
+        color: t.C.gold, fontFamily: t.fontLabel, fontWeight: 600, fontSize: 12, letterSpacing: '.06em', textTransform: 'uppercase',
+        padding: '12px 20px', borderRadius: t.motif.pillRadius, backdropFilter: 'blur(8px)', zIndex: 90,
       }}
     >
       {message}

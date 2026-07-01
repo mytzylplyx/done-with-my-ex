@@ -14,7 +14,7 @@ import { computeFreedom, DEFAULT_PROPS } from '@/lib/freedom'
 import type { CMode, CStyle, Layout, LogType, LoggedItem, Route } from '@/lib/freedom'
 import { useBreakpoint } from '@/lib/useBreakpoint'
 import { useHydrated } from '@/lib/useHydrated'
-import { C, fontBody } from '@/lib/tokens'
+import { useTheme } from '@/lib/theme'
 
 const freedomConfig = DEFAULT_PROPS
 
@@ -54,6 +54,7 @@ export default function App() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const mounted = useHydrated()
+  const t = useTheme()
   const bp = useBreakpoint()
   const isMobile = bp === 'mobile'
 
@@ -108,7 +109,7 @@ export default function App() {
 
   // Placeholder for SSR + the first client render (see mount effect above).
   if (!mounted) {
-    return <div style={{ height: '100vh', background: C.page }} />
+    return <div style={{ height: '100vh', background: t.C.page }} />
   }
 
   const vals = computeFreedom(freedomConfig, { route, logType, logged, now })
@@ -116,8 +117,8 @@ export default function App() {
   return (
     <div
       style={{
-        height: '100vh', display: 'flex', flexDirection: 'column', background: C.page,
-        fontFamily: fontBody, color: C.on, overflow: 'hidden',
+        height: '100vh', display: 'flex', flexDirection: 'column', background: t.C.page,
+        fontFamily: t.fontBody, color: t.C.on, overflow: 'hidden',
       }}
     >
       <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>
@@ -127,7 +128,7 @@ export default function App() {
         <main
           style={{
             flex: 1, minWidth: 0, overflowX: 'hidden', overflowY: 'auto', position: 'relative',
-            background: 'radial-gradient(120% 70% at 80% -10%,#0c1430 0%,#080a14 60%)',
+            background: t.decor.mainGrad,
           }}
         >
           <Topbar
@@ -151,7 +152,7 @@ export default function App() {
             onClick={() => setMenuOpen(false)}
             aria-hidden={!menuOpen}
             style={{
-              position: 'fixed', inset: 0, zIndex: 40, background: 'rgba(3,6,16,.62)',
+              position: 'fixed', inset: 0, zIndex: 40, background: t.decor.scrim,
               backdropFilter: 'blur(2px)', opacity: menuOpen ? 1 : 0,
               pointerEvents: menuOpen ? 'auto' : 'none', transition: 'opacity .2s ease',
             }}
