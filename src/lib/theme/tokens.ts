@@ -231,9 +231,11 @@ const insurgent: StyleDef = {
   id: 'insurgent',
   name: 'Financial Insurgent',
   fonts: {
-    display: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
+    // 'insurgent' is a hidden legacy style with no style-picker UI yet, so its
+    // display/label webfonts are not loaded; system fallbacks are fine here.
+    display: "'Space Grotesk', system-ui, sans-serif",
     body: "var(--font-inter), 'Inter', sans-serif",
-    label: "var(--font-work-sans), 'Work Sans', sans-serif",
+    label: "'Work Sans', system-ui, sans-serif",
   },
   motif: { cardRadius: 22, panelRadius: 16, chipRadius: 14, pillRadius: 11, ledgerMono: false, hazardRail: false },
   defaultMode: 'dark',

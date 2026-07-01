@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
-import { Inter, Oswald, IBM_Plex_Mono, Space_Grotesk, Work_Sans } from 'next/font/google'
+import { Inter, Oswald, IBM_Plex_Mono } from 'next/font/google'
 import { ThemeSync } from '@/lib/theme/ThemeSync'
 import { THEME_INIT_SCRIPT } from '@/lib/theme/tokens'
 import './globals.css'
@@ -18,20 +18,8 @@ const plexMono = IBM_Plex_Mono({
   variable: '--font-plex-mono',
   display: 'swap',
 })
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-})
-const workSans = Work_Sans({
-  subsets: ['latin'],
-  weight: ['600', '700'],
-  variable: '--font-work-sans',
-  display: 'swap',
-})
 
-const fontVars = [inter.variable, oswald.variable, plexMono.variable, spaceGrotesk.variable, workSans.variable].join(' ')
+const fontVars = [inter.variable, oswald.variable, plexMono.variable].join(' ')
 
 export const metadata: Metadata = {
   title: 'Done With My Ex — Your freedom has a date',

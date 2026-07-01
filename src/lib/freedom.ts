@@ -215,14 +215,14 @@ export function computeFreedom(props: FreedomProps, state: ComputeState): Freedo
   const remainSec = remainMs / 1000
 
   const humorRaw: Array<[string, string, number]> = [
-    ['Stairways to Heaven', '8m 02s, back-to-back', 482],
-    ['Taco Tuesdays', 'one per week', 604800],
-    ['Oppenheimers', '3-hour screenings', 10800],
-    ['Solar Cycles', 'one sunrise a day', 86400],
-    ['Snooze Buttons', '9-minute snoozes', 540],
-    ['Therapy Sessions', 'one a week', 604800],
-    ['Guilt Trips', 'one a day', 86400],
-    ['Tinder Left-Swipes', 'one every 2 sec', 2],
+    ['Stairways to Heaven', 'back-to-back, no parole', 482],
+    ['Taco Tuesdays', 'the one weekly commitment that shows up', 604800],
+    ['Oppenheimers', 'three hours you never get back', 10800],
+    ['Solar Cycles', 'one sunrise closer to freedom', 86400],
+    ['Snooze Buttons', 'nine more minutes of denial', 540],
+    ['Therapy Sessions', 'still cheaper than the lawyer', 604800],
+    ['Guilt Trips', 'one a day, unprompted', 86400],
+    ['Tinder Left-Swipes', 'better odds than the marriage', 2],
   ]
   const nerdRaw: Array<[string, string, number]> = [
     ['Fortnights', '14 days each', 1209600],
@@ -312,7 +312,7 @@ export function computeFreedom(props: FreedomProps, state: ComputeState): Freedo
   }
   const subs: Record<Route, string> = {
     dashboard: nowD.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }),
-    countdown: 'Counting down to ' + endLabel,
+    countdown: 'The sentence ends ' + endLabel,
     logger: 'Log it. Prove it.',
     vault: 'Your proof, on paper.',
   }
