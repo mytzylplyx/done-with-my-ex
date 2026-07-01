@@ -10,6 +10,7 @@ import { Logger } from '@/components/Logger'
 import { Vault } from '@/components/Vault'
 import { computeFreedom, DEFAULT_PROPS } from '@/lib/freedom'
 import type { CMode, CStyle, Layout, LogType, LoggedItem, Route } from '@/lib/freedom'
+import { useBreakpoint } from '@/lib/useBreakpoint'
 import { C, fontBody } from '@/lib/tokens'
 
 const freedomConfig = DEFAULT_PROPS
@@ -46,7 +47,11 @@ export default function App() {
   const [logged, setLogged] = useState<LoggedItem[]>([])
   const [now, setNow] = useState<number>(() => Date.now())
   const [toast, setToast] = useState<string>('')
+  const [menuOpen, setMenuOpen] = useState(false)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const bp = useBreakpoint()
+  const isMobile = bp === 'mobile'
 
   // Drive every countdown/progress visual off a single ticking clock.
   useEffect(() => {
@@ -86,6 +91,11 @@ export default function App() {
     showToast('Payment logged')
   }
 
+  // Sidebar navigation also closes the mobile drawer.
+  const navigate = (r: Route) => {
+    setRoute(r)
+    setMenuOpen(false)
+  }
   const goLogger = () => setRoute('logger')
   const goVault = () => setRoute('vault')
 
@@ -99,7 +109,8 @@ export default function App() {
       }}
     >
       <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>
-        <Sidebar route={route} onNavigate={setRoute} onGoPro={goVault} />
+        {/* Desktop / tablet: sidebar sits in the flow. Mobile: it moves to the drawer below. */}
+        {!isMobile && <Sidebar route={route} onNavigate={navigate} onGoPro={goVault} />}
 
         <main
           style={{
@@ -107,7 +118,10 @@ export default function App() {
             background: 'radial-gradient(120% 70% at 80% -10%,#0c1430 0%,#080a14 60%)',
           }}
         >
-          <Topbar vals={vals} route={route} layout={layout} onSetLayout={changeLayout} onLog={goLogger} />
+          <Topbar
+            vals={vals} route={route} layout={layout} onSetLayout={changeLayout}
+            onLog={goLogger} isMobile={isMobile} onMenu={() => setMenuOpen(true)}
+          />
 
           {route === 'dashboard' && layout === 'mission' && <MissionControl vals={vals} onLog={goLogger} onShare={share} />}
           {route === 'dashboard' && layout === 'cinematic' && <Cinematic vals={vals} onLog={goLogger} onGoVault={goVault} />}
@@ -117,6 +131,31 @@ export default function App() {
           {route === 'vault' && <Vault vals={vals} />}
         </main>
       </div>
+
+      {/* Mobile drawer nav — scrim + slide-in sidebar. */}
+      {isMobile && (
+        <>
+          <div
+            onClick={() => setMenuOpen(false)}
+            aria-hidden={!menuOpen}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 40, background: 'rgba(3,6,16,.62)',
+              backdropFilter: 'blur(2px)', opacity: menuOpen ? 1 : 0,
+              pointerEvents: menuOpen ? 'auto' : 'none', transition: 'opacity .2s ease',
+            }}
+          />
+          <div
+            style={{
+              position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 50, display: 'flex',
+              transform: menuOpen ? 'translateX(0)' : 'translateX(-100%)',
+              transition: 'transform .26s cubic-bezier(.4,0,.2,1)',
+              boxShadow: menuOpen ? '0 0 44px rgba(0,0,0,.6)' : 'none',
+            }}
+          >
+            <Sidebar route={route} onNavigate={navigate} onGoPro={() => { setMenuOpen(false); goVault() }} />
+          </div>
+        </>
+      )}
 
       <Toast message={toast} />
     </div>

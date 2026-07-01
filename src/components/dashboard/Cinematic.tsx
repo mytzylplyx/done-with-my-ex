@@ -1,5 +1,6 @@
 import { C, goldText, goldButton, fontDisplay, fontBody, fontLabel, mut } from '@/lib/tokens'
 import { FlipClock } from '@/components/FlipClock'
+import { useBreakpoint } from '@/lib/useBreakpoint'
 import type { FreedomVals } from '@/lib/freedom'
 
 const GOLD_BAR = 'linear-gradient(90deg,#FFE4AF,#FFC107)'
@@ -16,15 +17,19 @@ function StatCard({ label, value, gold }: { label: string; value: string; gold?:
 export function Cinematic({
   vals, onLog, onGoVault,
 }: { vals: FreedomVals; onLog: () => void; onGoVault: () => void }) {
+  const bp = useBreakpoint()
+  const isMobile = bp === 'mobile'
+  const stack = bp !== 'desktop'
+
   return (
     <div>
       {/* hero */}
-      <div style={{ position: 'relative', overflow: 'hidden', padding: '46px 32px 40px', background: 'radial-gradient(120% 130% at 50% -25%,#16234f 0%,#0a1330 55%,#070d22 100%)', borderBottom: '1px solid rgba(221,225,255,.06)', textAlign: 'center' }}>
+      <div style={{ position: 'relative', overflow: 'hidden', padding: isMobile ? '32px 16px 30px' : '46px 32px 40px', background: 'radial-gradient(120% 130% at 50% -25%,#16234f 0%,#0a1330 55%,#070d22 100%)', borderBottom: '1px solid rgba(221,225,255,.06)', textAlign: 'center' }}>
         <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 10, letterSpacing: '.24em', textTransform: 'uppercase', color: C.teal, marginBottom: 12 }}>Your last payment lands</div>
-        <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(30px,3.6vw,40px)', letterSpacing: '-.01em', ...goldText, marginBottom: 26 }}>{vals.endLabel}</div>
+        <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(28px,3.6vw,40px)', letterSpacing: '-.01em', ...goldText, marginBottom: 26 }}>{vals.endLabel}</div>
 
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: 'clamp(8px,1.4vw,18px)', flexWrap: 'wrap' }}>
-          <FlipClock vals={vals} size="lg" />
+          <FlipClock vals={vals} size={isMobile ? 'md' : 'lg'} />
         </div>
 
         <div style={{ maxWidth: 720, margin: '30px auto 0' }}>
@@ -40,7 +45,7 @@ export function Cinematic({
       </div>
 
       {/* lower */}
-      <div style={{ padding: '24px 32px 52px', maxWidth: 1320 }}>
+      <div style={{ padding: isMobile ? '20px 16px 40px' : '24px 32px 52px', maxWidth: 1320 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(130px,1fr))', gap: 14, marginBottom: 18 }}>
           <StatCard label="Paid so far" value={vals.paidSoFar} />
           <StatCard label="Left to pay" value={vals.leftToPay} gold />
@@ -48,7 +53,7 @@ export function Cinematic({
           <StatCard label="Days served" value={vals.daysServed} />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.5fr) minmax(0,1fr)', gap: 18, alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: stack ? 'minmax(0,1fr)' : 'minmax(0,1.5fr) minmax(0,1fr)', gap: 18, alignItems: 'start' }}>
           <div style={{ borderRadius: 18, background: C.containerLow, padding: '20px 22px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <span style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: mut(0.5) }}>On record</span>

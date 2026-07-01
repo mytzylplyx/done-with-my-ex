@@ -1,5 +1,6 @@
 import { C, goldText, goldButton, fontDisplay, fontBody, fontLabel, mut, seg, bgseg } from '@/lib/tokens'
 import { FlipClock } from '@/components/FlipClock'
+import { useBreakpoint } from '@/lib/useBreakpoint'
 import type { CMode, CStyle, FreedomVals, UnitCard } from '@/lib/freedom'
 
 const GOLD_BAR = 'linear-gradient(90deg,#FFE4AF,#FFC107)'
@@ -53,12 +54,14 @@ export function Countdown({
   onSetMode: (m: CMode) => void
   onShare: () => void
 }) {
+  const isMobile = useBreakpoint() === 'mobile'
+
   return (
-    <div style={{ padding: '30px 32px 56px' }}>
+    <div style={{ padding: isMobile ? '24px 16px 44px' : '30px 32px 56px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: 6 }}>
           <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', color: mut(0.5), marginBottom: 8 }}>Your last payment lands</div>
-          <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 32, letterSpacing: '-.01em', ...goldText, marginBottom: 18 }}>{vals.endLabel}</div>
+          <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: isMobile ? 26 : 32, letterSpacing: '-.01em', ...goldText, marginBottom: 18 }}>{vals.endLabel}</div>
           <Segmented<CStyle>
             options={[{ key: 'flip', label: 'Flip' }, { key: 'straight', label: 'Straight' }, { key: 'minimal', label: 'Minimal' }]}
             value={cstyle}
@@ -74,8 +77,8 @@ export function Countdown({
 
         {cstyle === 'straight' && (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, marginTop: 30 }}>
-            <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(40px,5vw,64px)', letterSpacing: '.05em', color: C.on }}>{vals.straightStr}</div>
-            <div style={{ display: 'flex', gap: 'clamp(22px,4vw,52px)', fontFamily: fontLabel, fontWeight: 600, fontSize: 10, letterSpacing: '.14em', color: mut(0.42), textTransform: 'uppercase' }}>
+            <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(26px,6vw,64px)', letterSpacing: '.04em', color: C.on, textAlign: 'center', maxWidth: '100%' }}>{vals.straightStr}</div>
+            <div style={{ display: 'flex', gap: 'clamp(14px,4vw,52px)', fontFamily: fontLabel, fontWeight: 600, fontSize: 10, letterSpacing: '.14em', color: mut(0.42), textTransform: 'uppercase' }}>
               <span>Yr</span><span>Mo</span><span>Dy</span><span>Hr</span><span>Min</span><span>Sec</span>
             </div>
           </div>
@@ -83,7 +86,7 @@ export function Countdown({
 
         {cstyle === 'minimal' && (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, marginTop: 24 }}>
-            <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(110px,15vw,180px)', lineHeight: 0.85, ...goldText }}>{vals.daysToGo}</div>
+            <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(96px,15vw,180px)', lineHeight: 0.85, ...goldText }}>{vals.daysToGo}</div>
             <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 13, letterSpacing: '.26em', textTransform: 'uppercase', color: mut(0.5) }}>Days to freedom</div>
           </div>
         )}
@@ -110,7 +113,7 @@ export function Countdown({
         </div>
 
         {cmode === 'straight' && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'minmax(0,1fr)' : 'repeat(3,minmax(0,1fr))', gap: 12 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7, padding: 18, borderRadius: 14, background: C.containerLow }}>
               <span style={{ fontFamily: fontBody, fontSize: 12.5, color: mut(0.55) }}>Days served</span>
               <span style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 24, color: C.on }}>{vals.daysServed}</span>

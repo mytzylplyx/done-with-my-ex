@@ -1,10 +1,12 @@
 import { C, goldButton, fontDisplay, fontBody, fontLabel, mut } from '@/lib/tokens'
+import { useBreakpoint } from '@/lib/useBreakpoint'
 import type { FreedomVals } from '@/lib/freedom'
 
 export function Vault({ vals }: { vals: FreedomVals }) {
+  const isMobile = useBreakpoint() === 'mobile'
   return (
-    <div style={{ padding: '30px 32px 56px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px,460px) minmax(0,1fr)', gap: 24, alignItems: 'start', maxWidth: 1240 }}>
+    <div style={{ padding: isMobile ? '22px 16px 44px' : '30px 32px 56px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'minmax(0,1fr)' : 'minmax(320px,460px) minmax(0,1fr)', gap: 24, alignItems: 'start', maxWidth: 1240 }}>
 
         {/* statement document */}
         <div>

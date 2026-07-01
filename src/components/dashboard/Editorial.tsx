@@ -1,4 +1,5 @@
 import { C, goldText, goldButton, fontDisplay, fontBody, fontLabel, mut } from '@/lib/tokens'
+import { useBreakpoint } from '@/lib/useBreakpoint'
 import type { FreedomVals } from '@/lib/freedom'
 
 const GOLD_BAR = 'linear-gradient(90deg,#FFE4AF,#FFC107)'
@@ -6,14 +7,18 @@ const GOLD_BAR = 'linear-gradient(90deg,#FFE4AF,#FFC107)'
 export function Editorial({
   vals, onLog,
 }: { vals: FreedomVals; onLog: () => void }) {
+  const isMobile = useBreakpoint() === 'mobile'
+  const colBorder = isMobile ? 'none' : '1px solid rgba(221,225,255,.1)'
+  const colPad = isMobile ? 0 : 28
+
   return (
-    <div style={{ padding: '56px 32px 64px' }}>
+    <div style={{ padding: isMobile ? '32px 16px 48px' : '56px 32px 64px' }}>
       <div style={{ maxWidth: 940, margin: '0 auto' }}>
         <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', color: C.teal, marginBottom: 18 }}>The end is in sight</div>
-        <h1 style={{ margin: 0, fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(40px,5.4vw,62px)', lineHeight: 1.02, letterSpacing: '-.02em', color: C.on }}>
+        <h1 style={{ margin: 0, fontFamily: fontDisplay, fontWeight: 700, fontSize: 'clamp(34px,5.4vw,62px)', lineHeight: 1.02, letterSpacing: '-.02em', color: C.on }}>
           You're <span style={goldText}>{vals.pctText}</span> of the way out.
         </h1>
-        <p style={{ margin: '20px 0 0', fontFamily: fontBody, fontSize: 16, lineHeight: 1.5, color: mut(0.6), maxWidth: 560 }}>
+        <p style={{ margin: '20px 0 0', fontFamily: fontBody, fontSize: isMobile ? 15 : 16, lineHeight: 1.5, color: mut(0.6), maxWidth: 560 }}>
           Your last payment lands <span style={{ color: C.on, fontWeight: 500 }}>{vals.endLabel}</span>. That's {vals.humanLine} left — logged, proven, and ticking down.
         </p>
 
@@ -34,16 +39,16 @@ export function Editorial({
 
         <div style={{ height: 1, background: 'rgba(221,225,255,.1)', margin: '40px 0' }} />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 28 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'minmax(0,1fr)' : 'repeat(3,minmax(0,1fr))', gap: isMobile ? 22 : 28 }}>
           <div>
             <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: mut(0.42), marginBottom: 10 }}>Paid so far</div>
             <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 30, color: C.on }}>{vals.paidSoFar}</div>
           </div>
-          <div style={{ borderLeft: '1px solid rgba(221,225,255,.1)', paddingLeft: 28 }}>
+          <div style={{ borderLeft: colBorder, paddingLeft: colPad }}>
             <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: mut(0.42), marginBottom: 10 }}>Left to pay</div>
             <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 30, color: C.gold }}>{vals.leftToPay}</div>
           </div>
-          <div style={{ borderLeft: '1px solid rgba(221,225,255,.1)', paddingLeft: 28 }}>
+          <div style={{ borderLeft: colBorder, paddingLeft: colPad }}>
             <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: mut(0.42), marginBottom: 10 }}>Per day on parole</div>
             <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 30, color: C.on }}>{vals.dailyCost}</div>
           </div>
@@ -66,7 +71,7 @@ export function Editorial({
           </div>
         ))}
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginTop: 34 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginTop: 34, flexWrap: 'wrap' }}>
           <div style={{ fontFamily: fontBody, fontSize: 14, color: mut(0.6) }}>
             Next payment <span style={{ color: C.on, fontWeight: 600, fontFamily: fontDisplay }}>{vals.nextAmount}</span> · {vals.nextPay}
           </div>

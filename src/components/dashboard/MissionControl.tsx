@@ -1,4 +1,5 @@
 import { C, goldText, goldButton, fontDisplay, fontBody, fontLabel, mut } from '@/lib/tokens'
+import { useBreakpoint } from '@/lib/useBreakpoint'
 import type { FreedomVals } from '@/lib/freedom'
 
 const GOLD_BAR = 'linear-gradient(90deg,#FFE4AF,#FFC107)'
@@ -6,16 +7,30 @@ const GOLD_BAR = 'linear-gradient(90deg,#FFE4AF,#FFC107)'
 export function MissionControl({
   vals, onLog, onShare,
 }: { vals: FreedomVals; onLog: () => void; onShare: () => void }) {
+  const bp = useBreakpoint()
+  const isMobile = bp === 'mobile'
+  const stack = bp !== 'desktop'
+  // In a single-column grid, `span N` would spawn implicit columns and overflow,
+  // so collapse spans to `auto` when stacking.
+  const col = (span: number) => (stack ? 'auto' : `span ${span}`)
+
   return (
-    <div style={{ padding: '28px 32px 52px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12,minmax(0,1fr))', gap: 18, alignItems: 'start', maxWidth: 1400 }}>
+    <div style={{ padding: isMobile ? '20px 16px 40px' : '28px 32px 52px' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: stack ? 'minmax(0,1fr)' : 'repeat(12,minmax(0,1fr))',
+          gap: 18, alignItems: 'start', maxWidth: 1400,
+        }}
+      >
 
         {/* Freedom Clock + donut */}
         <div
           style={{
-            gridColumn: 'span 7', minWidth: 0, borderRadius: 22, padding: 30,
+            gridColumn: col(7), minWidth: 0, borderRadius: 22, padding: isMobile ? 22 : 30,
             background: 'linear-gradient(160deg,#0f1d49,#0a1638)', border: '1px solid rgba(221,225,255,.07)',
-            display: 'flex', alignItems: 'center', gap: 34, minHeight: 248,
+            display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center',
+            gap: isMobile ? 20 : 34, minHeight: 248, textAlign: isMobile ? 'center' : 'left',
           }}
         >
           <div style={{ position: 'relative', width: 184, height: 184, flexShrink: 0 }}>
@@ -45,14 +60,14 @@ export function MissionControl({
               Last payment lands <span style={{ color: C.gold, fontWeight: 600 }}>{vals.endLabel}</span>
             </div>
             <div style={{ fontFamily: fontBody, fontSize: 12.5, color: mut(0.5), marginTop: 4 }}>{vals.humanLine} left</div>
-            <div style={{ height: 8, borderRadius: 6, background: 'rgba(221,225,255,.09)', overflow: 'hidden', marginTop: 16, maxWidth: 380 }}>
+            <div style={{ height: 8, borderRadius: 6, background: 'rgba(221,225,255,.09)', overflow: 'hidden', margin: isMobile ? '16px auto 0' : '16px 0 0', maxWidth: isMobile ? '100%' : 380 }}>
               <div style={{ height: '100%', width: vals.pctWidth, background: GOLD_BAR, borderRadius: 6 }} />
             </div>
           </div>
         </div>
 
         {/* stat column */}
-        <div style={{ gridColumn: 'span 5', display: 'flex', flexDirection: 'column', gap: 16, minWidth: 0 }}>
+        <div style={{ gridColumn: col(5), display: 'flex', flexDirection: 'column', gap: 16, minWidth: 0 }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(130px,1fr))', gap: 16 }}>
             <div style={{ padding: 18, borderRadius: 16, background: C.containerLow }}>
               <div style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 8.5, letterSpacing: '.13em', textTransform: 'uppercase', color: mut(0.45), marginBottom: 9 }}>Paid so far</div>
@@ -82,29 +97,44 @@ export function MissionControl({
         </div>
 
         {/* on record table */}
-        <div style={{ gridColumn: 'span 8', minWidth: 0, borderRadius: 18, background: C.containerLow, padding: '20px 22px' }}>
+        <div style={{ gridColumn: col(8), minWidth: 0, borderRadius: 18, background: C.containerLow, padding: isMobile ? '18px 16px' : '20px 22px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
             <span style={{ fontFamily: fontLabel, fontWeight: 700, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: mut(0.5) }}>On record</span>
             <span style={{ fontFamily: fontBody, fontSize: 11, color: mut(0.4) }}>{vals.payCount}</span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr) auto', gap: 12, padding: '9px 6px', borderBottom: '1px solid rgba(221,225,255,.08)', fontFamily: fontLabel, fontWeight: 700, fontSize: 8.5, letterSpacing: '.12em', textTransform: 'uppercase', color: mut(0.38) }}>
-            <span>Period</span><span>Type</span><span>Receipt</span><span style={{ textAlign: 'right' }}>Amount</span>
-          </div>
-          {vals.payments.map((u) => (
-            <div key={u.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr) auto', gap: 12, alignItems: 'center', padding: '12px 6px', borderBottom: '1px solid rgba(221,225,255,.05)' }}>
-              <span style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 13, color: C.on }}>{u.when}</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-                <span style={{ width: 8, height: 8, borderRadius: 2, flexShrink: 0, background: u.dot }} />
-                <span style={{ fontFamily: fontBody, fontSize: 12.5, color: mut(0.7) }}>{u.type}</span>
-              </div>
-              <span style={{ fontFamily: fontBody, fontSize: 11, color: u.recClr }}>{u.receiptText}</span>
-              <span style={{ fontFamily: fontDisplay, fontWeight: 600, fontSize: 14, color: C.on, textAlign: 'right' }}>{u.amount}</span>
+
+          {!isMobile && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr) auto', gap: 12, padding: '9px 6px', borderBottom: '1px solid rgba(221,225,255,.08)', fontFamily: fontLabel, fontWeight: 700, fontSize: 8.5, letterSpacing: '.12em', textTransform: 'uppercase', color: mut(0.38) }}>
+              <span>Period</span><span>Type</span><span>Receipt</span><span style={{ textAlign: 'right' }}>Amount</span>
             </div>
+          )}
+
+          {vals.payments.map((u) => (
+            isMobile ? (
+              <div key={u.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 2px', borderBottom: '1px solid rgba(221,225,255,.05)' }}>
+                <span style={{ width: 8, height: 8, borderRadius: 2, flexShrink: 0, background: u.dot }} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 13.5, color: C.on }}>{u.type}</div>
+                  <div style={{ fontFamily: fontBody, fontSize: 11, color: u.recClr }}>{u.when} · {u.receiptText}</div>
+                </div>
+                <span style={{ fontFamily: fontDisplay, fontWeight: 600, fontSize: 14, color: C.on }}>{u.amount}</span>
+              </div>
+            ) : (
+              <div key={u.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr) auto', gap: 12, alignItems: 'center', padding: '12px 6px', borderBottom: '1px solid rgba(221,225,255,.05)' }}>
+                <span style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 13, color: C.on }}>{u.when}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
+                  <span style={{ width: 8, height: 8, borderRadius: 2, flexShrink: 0, background: u.dot }} />
+                  <span style={{ fontFamily: fontBody, fontSize: 12.5, color: mut(0.7) }}>{u.type}</span>
+                </div>
+                <span style={{ fontFamily: fontBody, fontSize: 11, color: u.recClr }}>{u.receiptText}</span>
+                <span style={{ fontFamily: fontDisplay, fontWeight: 600, fontSize: 14, color: C.on, textAlign: 'right' }}>{u.amount}</span>
+              </div>
+            )
           ))}
         </div>
 
         {/* share card */}
-        <div style={{ gridColumn: 'span 4', minWidth: 0, borderRadius: 18, padding: 20, background: 'radial-gradient(130% 100% at 50% 0%,#0c1a47,#04102f)', border: '1px solid rgba(221,225,255,.06)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        <div style={{ gridColumn: col(4), minWidth: 0, borderRadius: 18, padding: 20, background: 'radial-gradient(130% 100% at 50% 0%,#0c1a47,#04102f)', border: '1px solid rgba(221,225,255,.06)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
           <img src="/assets/crow-cut.png" alt="" style={{ width: 40, height: 40, objectFit: 'contain', marginBottom: 12 }} />
           <div style={{ fontFamily: fontDisplay, fontWeight: 700, fontSize: 19, color: C.on, lineHeight: 1.12 }}>{vals.humanLine}</div>
           <div style={{ fontFamily: fontBody, fontSize: 11.5, color: C.teal, marginTop: 8 }}>{vals.pctText} served · {vals.daysToGo} days to go</div>

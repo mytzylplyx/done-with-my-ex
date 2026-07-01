@@ -1,4 +1,5 @@
 import { C, goldButton, fontDisplay, fontBody, fontLabel, mut, seg, bgseg } from '@/lib/tokens'
+import { useBreakpoint } from '@/lib/useBreakpoint'
 import type { FreedomVals, LogType } from '@/lib/freedom'
 
 function TypeButton({
@@ -33,9 +34,10 @@ export function Logger({
   onLogPayment: () => void
   onGoVault: () => void
 }) {
+  const isMobile = useBreakpoint() === 'mobile'
   return (
-    <div style={{ padding: '30px 32px 56px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px,420px) minmax(0,1fr)', gap: 22, alignItems: 'start', maxWidth: 1200 }}>
+    <div style={{ padding: isMobile ? '22px 16px 44px' : '30px 32px 56px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'minmax(0,1fr)' : 'minmax(300px,420px) minmax(0,1fr)', gap: 22, alignItems: 'start', maxWidth: 1200 }}>
 
         {/* log panel */}
         <div style={{ borderRadius: 18, padding: 22, background: C.containerLow }}>
